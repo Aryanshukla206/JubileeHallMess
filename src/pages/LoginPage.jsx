@@ -8,11 +8,11 @@ const LoginPage = () => {
   const { login, currentUser } = useAuth();
   const { error } = useToast();
   const navigate = useNavigate();
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+
   // If user is already logged in, redirect to appropriate dashboard
   useEffect(() => {
     if (currentUser) {
@@ -23,20 +23,20 @@ const LoginPage = () => {
       }
     }
   }, [currentUser, navigate]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       error('Please fill in all fields');
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       const user = login(email, password);
-      
+
       if (user) {
         // Navigate to appropriate dashboard based on role
         if (user.role === 'admin') {
@@ -63,8 +63,8 @@ const LoginPage = () => {
               <Coffee size={24} className="text-blue-600" />
               <h1 className="ml-2 text-xl font-bold text-gray-800">Jubilee Hall Mess</h1>
             </div>
-            <Link 
-              to="/guest-booking" 
+            <Link
+              to="/guest-booking"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >
               Guest Booking
@@ -72,7 +72,7 @@ const LoginPage = () => {
           </div>
         </div>
       </header>
-      
+
       <main className="flex-1 flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
@@ -84,7 +84,7 @@ const LoginPage = () => {
               Sign in to manage your mess meals
             </p>
           </div>
-          
+
           <div className="mt-8 bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10 space-y-6">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
@@ -145,7 +145,7 @@ const LoginPage = () => {
                 </button>
               </div>
             </form>
-            
+
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -161,20 +161,20 @@ const LoginPage = () => {
               <div className="mt-4 grid grid-cols-1 gap-3">
                 <div className="bg-gray-50 p-3 rounded-md text-sm text-gray-700">
                   <p className="font-medium mb-1">Resident</p>
-                  <p>Email: resident1@jubileehall.com</p>
-                  <p>Password: resident123</p>
+                  <p>Email: resident_RoomNo@jubileehall.com</p>
+                  <p>Password: resident@RoomNo</p>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-md text-sm text-gray-700">
+                {/* <div className="bg-gray-50 p-3 rounded-md text-sm text-gray-700">
                   <p className="font-medium mb-1">Admin</p>
                   <p>Email: admin@jubileehall.com</p>
                   <p>Password: admin123</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
         </div>
       </main>
-      
+
       <footer className="bg-white border-t border-gray-200 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-gray-500 text-sm">
