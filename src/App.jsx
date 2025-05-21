@@ -15,6 +15,7 @@ import OrdersPage from './pages/OrdersPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
+
   return (
     <ToastProvider>
       <AuthProvider>
@@ -25,37 +26,37 @@ function App() {
                 <Routes>
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/guest-booking" element={<GuestBookingPage />} />
-                  <Route 
-                    path="/dashboard" 
+                  <Route
+                    path="/dashboard"
                     element={
                       <ProtectedRoute allowedRoles={['resident']}>
                         <ResidentDashboard />
                       </ProtectedRoute>
-                    } 
+                    }
                   />
-                  <Route 
-                    path="/menu" 
+                  <Route
+                    path="/menu"
                     element={
                       <ProtectedRoute allowedRoles={['resident', 'admin']}>
                         <MenuPage />
                       </ProtectedRoute>
-                    } 
+                    }
                   />
-                  <Route 
-                    path="/orders" 
+                  <Route
+                    path="/orders"
                     element={
                       <ProtectedRoute allowedRoles={['resident', 'admin']}>
                         <OrdersPage />
                       </ProtectedRoute>
-                    } 
+                    }
                   />
-                  <Route 
-                    path="/admin" 
+                  <Route
+                    path="/admin"
                     element={
                       <ProtectedRoute allowedRoles={['admin']}>
                         <AdminDashboard />
                       </ProtectedRoute>
-                    } 
+                    }
                   />
                   <Route path="/" element={<Navigate to="/login" replace />} />
                   <Route path="*" element={<NotFoundPage />} />

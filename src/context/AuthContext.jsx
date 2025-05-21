@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 // Create auth context
 const AuthContext = createContext();
 
+
 // Sample user data
 const USERS = [
   {
