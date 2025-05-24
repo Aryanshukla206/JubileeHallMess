@@ -8,14 +8,14 @@ http\://<your-domain-or-localhost>:<PORT>/api
 
 ```
 
-In development, if running locally on port 5000:
+In development, if running locally on port 5000:  
 ```
 
 [http://localhost:5000/api](http://localhost:5000/api)
 
 ```
 
-All **protected** endpoints require the HTTP header:
+All **protected** endpoints require the HTTP header:  
 ```
 
 Authorization: Bearer \<JWT\_TOKEN>
@@ -32,12 +32,12 @@ Authenticate a user and receive a JSON Web Token.
 
 **Request Body**
 
-| Field      | Type     | Required | Description               |
-| ---------- | -------- | -------- | ------------------------- |
-| `email`    | `string` | yes      | User’s email              |
-| `password` | `string` | yes      | Plaintext password        |
+| Field      | Type     | Required | Description        |
+| ---------- | -------- | -------- | ------------------ |
+| `email`    | `string` | yes      | User’s email       |
+| `password` | `string` | yes      | Plaintext password |
 
-**Response**
+**Responses**
 
 - **200 OK**
 
@@ -66,7 +66,7 @@ Authenticate a user and receive a JSON Web Token.
 ## 2. Users
 
 > **Protected**: requires valid JWT.
-> **Role**: only `admin` users should be able to create/update/delete.
+> **Role**: only `admin` users may create/update/delete.
 
 ### **GET** `/users`
 
@@ -78,7 +78,7 @@ List all users.
 Authorization: Bearer <JWT_TOKEN>
 ```
 
-**Response** (200 OK)
+**200 OK**
 
 ```json
 [
@@ -90,7 +90,7 @@ Authorization: Bearer <JWT_TOKEN>
     "createdAt": "2025-05-22T12:00:00.000Z",
     "updatedAt": "2025-05-22T12:00:00.000Z"
   },
-  { /* more users */ }
+  { /* … */ }
 ]
 ```
 
@@ -106,28 +106,26 @@ Authorization: Bearer <JWT_TOKEN>
 
 **Request Body**
 
-| Field      | Type     | Required | Description                           |
-| ---------- | -------- | -------- | ------------------------------------- |
-| `id`       | `number` | yes      | (Optional) legacy numeric ID          |
-| `email`    | `string` | yes      | Unique email                          |
-| `name`     | `string` | yes      | Full user name                        |
-| `role`     | `string` | yes      | `resident` or `admin`                 |
-| `password` | `string` | yes      | Plaintext password (hashed upon save) |
+| Field      | Type     | Required | Description                  |
+| ---------- | -------- | -------- | ---------------------------- |
+| `id`       | `number` | yes      | (Optional) legacy numeric ID |
+| `email`    | `string` | yes      | Unique email                 |
+| `name`     | `string` | yes      | Full user name               |
+| `role`     | `string` | yes      | `resident` or `admin`        |
+| `password` | `string` | yes      | Plaintext password (hashed)  |
 
-**Response**
+**201 Created**
 
-* **201 Created**
-
-  ```json
-  {
-    "_id": "60e6b8c9f1b4a330c83a2d11",
-    "email": "resident_2@jubileehall.com",
-    "name": "Kumar Abhishek",
-    "role": "resident",
-    "createdAt": "2025-05-22T12:05:00.000Z",
-    "updatedAt": "2025-05-22T12:05:00.000Z"
-  }
-  ```
+```json
+{
+  "_id": "60e6b8c9f1b4a330c83a2d11",
+  "email": "resident_2@jubileehall.com",
+  "name": "Kumar Abhishek",
+  "role": "resident",
+  "createdAt": "2025-05-22T12:05:00.000Z",
+  "updatedAt": "2025-05-22T12:05:00.000Z"
+}
+```
 
 ### **PUT** `/users/:id`
 
@@ -139,31 +137,27 @@ Update an existing user.
 Authorization: Bearer <JWT_TOKEN>
 ```
 
-**URL Parameters**
+**URL Params**
 
-| Name | Type   | Description               |
-| ---- | ------ | ------------------------- |
-| `id` | string | MongoDB `_id` of the user |
+* `id`: MongoDB `_id`
 
 **Request Body**
 
 Any subset of `{ email, name, role, password }`
-*(if `password` provided, it will be hashed before save)*
+(if `password` provided, it will be hashed)
 
-**Response**
+**200 OK**
 
-* **200 OK**
-
-  ```json
-  {
-    "_id": "60e6a7e2f1a4b23a4c8d1e77",
-    "email": "updated@jubileehall.com",
-    "name": "Updated Name",
-    "role": "resident",
-    "createdAt": "...",
-    "updatedAt": "..."
-  }
-  ```
+```json
+{
+  "_id": "60e6a7e2f1a4b23a4c8d1e77",
+  "email": "updated@jubileehall.com",
+  "name": "Updated Name",
+  "role": "resident",
+  "createdAt": "...",
+  "updatedAt": "..."
+}
+```
 
 ### **DELETE** `/users/:id`
 
@@ -175,15 +169,11 @@ Remove a user.
 Authorization: Bearer <JWT_TOKEN>
 ```
 
-**URL Parameters**
+**URL Params**
 
-| Name | Type   | Description               |
-| ---- | ------ | ------------------------- |
-| `id` | string | MongoDB `_id` of the user |
+* `id`: MongoDB `_id`
 
-**Response**
-
-* **204 No Content**
+**204 No Content**
 
 ---
 
@@ -201,7 +191,7 @@ Fetch all resident bookings.
 Authorization: Bearer <JWT_TOKEN>
 ```
 
-**Response** (200 OK)
+**200 OK**
 
 ```json
 [
@@ -217,7 +207,7 @@ Authorization: Bearer <JWT_TOKEN>
     "status": "pending",
     "timestamp": "2025-05-22T18:57:23.595Z"
   },
-  { /* more bookings */ }
+  { /* … */ }
 ]
 ```
 
@@ -240,18 +230,16 @@ Authorization: Bearer <JWT_TOKEN>
 | `contactNumber` | `string`            | yes      | Phone number                          |
 | `mealType`      | `string` enum       | yes      | `breakfast` / `lunch` / `dinner`      |
 | `date`          | `string` (ISO Date) | yes      | YYYY-MM-DD                            |
-| `quantities`    | `object`            | yes      | Map: dish name → quantity             |
+| `quantities`    | `object`            | yes      | Map: dish → qty                       |
 | `hasDiscount`   | `boolean`           | no       | Defaults to `false`                   |
 | `status`        | `string` enum       | no       | `pending` / `confirmed` / `cancelled` |
 | `timestamp`     | `string` (ISO Date) | no       | Defaults to now                       |
 
-**Response**
-
-* **201 Created** → booking object
+**201 Created** → booking object
 
 ### **PUT** `/bookings/:id`
 
-Update a booking (e.g., change status).
+Update a booking (e.g. status).
 
 **Headers**
 
@@ -259,23 +247,15 @@ Update a booking (e.g., change status).
 Authorization: Bearer <JWT_TOKEN>
 ```
 
-**URL Parameters**
+**URL Params**
 
-| Name | Type   | Description                |
-| ---- | ------ | -------------------------- |
-| `id` | string | Mongo `_id` of the booking |
+* `id`: Mongo `_id` of the booking
 
 **Request Body**
 
-Any subset of booking fields, e.g.:
+Subset of booking fields, e.g. `{ "status": "confirmed" }`
 
-```json
-{ "status": "confirmed" }
-```
-
-**Response**
-
-* **200 OK** → updated booking object
+**200 OK** → updated booking object
 
 ### **DELETE** `/bookings/:id`
 
@@ -287,23 +267,17 @@ Remove a booking.
 Authorization: Bearer <JWT_TOKEN>
 ```
 
-**URL Parameters**
+**URL Params**
 
-| Name | Type   | Description                |
-| ---- | ------ | -------------------------- |
-| `id` | string | Mongo `_id` of the booking |
+* `id`: Mongo `_id`
 
-**Response**
-
-* **204 No Content**
+**204 No Content**
 
 ---
 
 ## 4. Guest Bookings
 
 > **Protected**
-
-Endpoints for managing external guest meal orders.
 
 ### **GET** `/guest-bookings`
 
@@ -322,14 +296,12 @@ Create a guest booking.
 | `contactNumber` | `string`            | yes      | Phone number                      |
 | `mealType`      | `string` enum       | yes      | `breakfast`/`lunch`/`dinner`      |
 | `date`          | `string` (ISO Date) | yes      | YYYY-MM-DD                        |
-| `quantities`    | `object`            | yes      | Map: dish name → quantity         |
+| `quantities`    | `object`            | yes      | Map: dish → qty                   |
 | `hasDiscount`   | `boolean`           | no       | Defaults to `false`               |
 | `status`        | `string` enum       | no       | `pending`/`confirmed`/`cancelled` |
 | `timestamp`     | `string` (ISO Date) | no       | Defaults to now                   |
 
-**Response**
-
-* **201 Created** → guest-booking object
+**201 Created** → guest-booking object
 
 ### **PUT** `/guest-bookings/:id`
 
@@ -339,29 +311,23 @@ Update guest booking by `id`.
 
 Delete guest booking by `id`.
 
-*Response codes/responses mirror those in Resident Bookings.*
-
 ---
 
 ## 5. Menu
 
 > **Protected**
 
-A single document represents the weekly menu.
-
 ### **GET** `/menu`
 
 Fetch the current full-week menu.
 
-**Response** (200 OK)
+**200 OK**
 
 ```json
 {
   "_id": "...",
   "monday":   { "breakfast": [...], "lunch": [...], "dinner": [...] },
-  "tuesday":  { /* … */ },
   /* … through sunday */
-  "sunday": { /* … */ }
 }
 ```
 
@@ -374,14 +340,11 @@ Create or overwrite the menu.
 ```json
 {
   "monday":   { "breakfast": ["…"], "lunch": ["…"], "dinner": ["…"] },
-  "tuesday":  { /* … */ },
   /* … through sunday */
 }
 ```
 
-**Response**
-
-* **200 OK** → updated menu document
+**200 OK** → updated menu
 
 ---
 
@@ -393,12 +356,12 @@ Create or overwrite the menu.
 
 List all kitchen off-days.
 
-**Response** (200 OK)
+**200 OK**
 
 ```json
 [
   { "_id": "...", "date": "2025-01-01T00:00:00.000Z", "reason": "New Year Holiday" },
-  { /* … */ }
+  /* … */
 ]
 ```
 
@@ -413,25 +376,21 @@ Add an off-day.
 | `date`   | `string` (ISO Date) | yes      | YYYY-MM-DD          |
 | `reason` | `string`            | yes      | Holiday description |
 
-**Response**
-
-* **201 Created** → off-day object
+**201 Created** → off-day object
 
 ### **PUT** `/off-days/:id`
 
-Update an off-day by its Mongo `_id`.
+Update an off-day by Mongo `_id`.
 
 ### **DELETE** `/off-days/:id`
 
-Delete an off-day by its Mongo `_id`.
+Delete an off-day by Mongo `_id`.
 
 ---
 
 ## 7. Rebates
 
 > **Protected**
-
-Residents can request temporary meal rebates.
 
 ### **GET** `/rebates`
 
@@ -454,74 +413,70 @@ Apply for a rebate.
 | `status`    | `string` enum       | no       | Defaults to `pending`    |
 | `appliedAt` | `string` (ISO Date) | no       | Defaults to now          |
 
-**Response**
-
-* **201 Created** → rebate object
+**201 Created** → rebate object
 
 ### **PUT** `/rebates/:id`
 
-Update rebate status by its unique `id`.
+Update rebate status by unique `id`.
 
 ### **DELETE** `/rebates/:id`
 
-Delete a rebate request by its unique `id`.
+Delete a rebate request by unique `id`.
 
 ---
 
 ## Error Responses
 
-All errors are returned in JSON with:
+All errors are returned as JSON:
 
 ```json
 {
-  "message": "<description>",
+  "message": "<error description>",
   "stack": "<stack trace or null in production>"
 }
 ```
 
 * **400 Bad Request** – invalid or missing parameters
 * **401 Unauthorized** – missing/invalid token or bad credentials
-* **403 Forbidden** – valid token but insufficient role permissions
+* **403 Forbidden** – valid token but insufficient permissions
 * **404 Not Found** – resource not found
 * **500 Internal Server Error** – unexpected server error
 
 ---
 
-### Example Usage
+## Example Usage
 
 1. **Login**
 
    ```bash
    curl -X POST http://localhost:5000/api/auth/login \
-     -H "Content-Type: application/json" \
-     -d '{"email":"admin@jubileehall.com","password":"admin123"}'
+        -H "Content-Type: application/json" \
+        -d '{"email":"admin@jubileehall.com","password":"admin123"}'
    ```
 
 2. **Fetch Bookings**
 
    ```bash
    curl http://localhost:5000/api/bookings \
-     -H "Authorization: Bearer <JWT_TOKEN>"
+        -H "Authorization: Bearer <JWT_TOKEN>"
    ```
 
 3. **Add Guest Booking**
 
    ```bash
    curl -X POST http://localhost:5000/api/guest-bookings \
-     -H "Authorization: Bearer <JWT_TOKEN>" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "id":"GB1001",
-       "userName":"John Doe",
-       "contactNumber":"1234567890",
-       "mealType":"dinner",
-       "date":"2025-05-24",
-       "quantities":{ "rice":2, "dal":1 },
-       "hasDiscount":false
-     }'
+        -H "Authorization: Bearer <JWT_TOKEN>" \
+        -H "Content-Type: application/json" \
+        -d '{
+          "id":"GB1001",
+          "userName":"John Doe",
+          "contactNumber":"1234567890",
+          "mealType":"dinner",
+          "date":"2025-05-24",
+          "quantities":{ "rice":2, "dal":1 },
+          "hasDiscount":false
+        }'
    ```
-
----
 
 ```
 ```
