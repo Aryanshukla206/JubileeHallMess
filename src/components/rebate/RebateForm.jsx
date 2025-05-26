@@ -5,7 +5,7 @@ import { useToast } from '../../context/ToastContext';
 const RebateForm = () => {
   const { applyForRebate } = useRebates();
   const { success, error } = useToast();
-  
+
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [reason, setReason] = useState('');
@@ -16,22 +16,23 @@ const RebateForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (!startDate || !endDate || !reason) {
       error("Please fill all fields");
       return;
     }
-    
+
     if (new Date(startDate) > new Date(endDate)) {
       error("End date must be after start date");
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
-      const rebate = applyForRebate(startDate, endDate, reason);
+      // console.log("Applying for rebate:", { startDate, endDate, reason });
+      const rebate = applyForRebate({ startDate, endDate, reason });
       if (rebate) {
         success("Rebate application submitted successfully");
         // Reset form
@@ -51,7 +52,7 @@ const RebateForm = () => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-xl font-bold text-gray-800 mb-4">Apply for Rebate</h2>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="space-y-4">
           <div>
@@ -68,7 +69,7 @@ const RebateForm = () => {
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
-          
+
           <div>
             <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-1">
               End Date
@@ -83,7 +84,7 @@ const RebateForm = () => {
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
-          
+
           <div>
             <label htmlFor="reason" className="block text-sm font-medium text-gray-700 mb-1">
               Reason
@@ -98,21 +99,20 @@ const RebateForm = () => {
               placeholder="Please provide a reason for your rebate application..."
             />
           </div>
-          
+
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full p-2 rounded-md font-medium transition-colors ${
-              isSubmitting 
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-blue-600 text-white hover:bg-blue-700'
-            }`}
+            className={`w-full p-2 rounded-md font-medium transition-colors ${isSubmitting
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
           >
             {isSubmitting ? 'Submitting...' : 'Apply for Rebate'}
           </button>
         </div>
       </form>
-      
+
       <div className="mt-4 text-sm text-gray-600">
         <p>Note: Rebate applications need to be approved by the mess admin before taking effect.</p>
         <p className="mt-1">You will not be able to book meals during the rebate period.</p>

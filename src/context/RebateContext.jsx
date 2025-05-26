@@ -33,6 +33,7 @@ export const RebateProvider = ({ children }) => {
   const applyForRebate = async ({ startDate, endDate, reason }) => {
     if (!currentUser) return null;
     const payload = {
+      id: currentUser.id, // Use _id from currentUser
       userId: currentUser._id,
       userName: currentUser.name,
       startDate,
@@ -48,6 +49,7 @@ export const RebateProvider = ({ children }) => {
     setRebates(prev => [...prev, created]);
     return created;
   };
+
 
   // Approve a rebate (admin)
   const approveRebate = async id => {

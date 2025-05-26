@@ -5,6 +5,7 @@ import { useAuth } from './AuthContext';
 const MenuContext = createContext();
 
 export const MenuProvider = ({ children }) => {
+  console.log('⚙️ MenuProvider init');
   const { authFetch, currentUser } = useAuth();
   const [menu, setMenu] = useState(null);
   const [offDays, setOffDays] = useState([]);
@@ -76,34 +77,37 @@ export const MenuProvider = ({ children }) => {
 
   // Helpers
   const isOffDay = date => {
-    offDays.some(d => d.date.split('T')[0] === date);
-  }
+    console.log('isOffDay checking:', date);
+    return offDays.some(d => d.date.split('T')[0] === date);
+  };
 
   const getOffDayReason = date => {
     const d = offDays.find(d => d.date.split('T')[0] === date);
+    console.log('getOffDayReason:', date, '=>', d?.reason);
     return d ? d.reason : null;
   };
 
   const getMenuForDate = dateString => {
     if (!menu) return null;
     const dow = getDayOfWeek(dateString);
-    // console.log('MenuContext > getMenuForDate:', dateString, '=>', dow, menu[dow]);
+    console.log('MenuContext > getMenuForDate:', dateString, '=>', dow, menu[dow]);
     return menu[dow] || null;
   };
+  const value = {
+    menu,
+    offDays,
+    loading,
+    updateMenu,
+    updateDayMeal,
+    addOffDay,
+    removeOffDay,
+    isOffDay,
+    getOffDayReason,
+    getMenuForDate,
+  }
 
   return (
-    <MenuContext.Provider value={{
-      menu,
-      offDays,
-      loading,
-      updateMenu,
-      updateDayMeal,
-      addOffDay,
-      removeOffDay,
-      isOffDay,
-      getOffDayReason,
-      getMenuForDate,
-    }}>
+    <MenuContext.Provider value={value}>
       {!loading && children}
     </MenuContext.Provider>
   );

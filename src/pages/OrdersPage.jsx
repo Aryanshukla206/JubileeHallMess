@@ -4,12 +4,13 @@ import OrderList from '../components/orders/OrderList';
 import { useBookings } from '../context/BookingContext';
 import { useAuth } from '../context/AuthContext';
 import { Filter, Search } from 'lucide-react';
+import getTodayDate from '../utils/getTodayDate';
 
 const OrdersPage = () => {
   const { currentUser, isAdmin } = useAuth();
-  const { getTodayBookings, getBookingsByDate, getGuestBookingsByDate } = useBookings();
+  const { getBookingsByDate, getGuestBookingsByDate } = useBookings();
 
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [date, setDate] = useState(getTodayDate);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterMeal, setFilterMeal] = useState('all');
 
@@ -29,6 +30,11 @@ const OrdersPage = () => {
     const matchesMeal = filterMeal === 'all' || order.mealType === filterMeal;
     return matchesSearch && matchesMeal;
   });
+
+  const myFilteredOrders = orders.filter(order =>
+    order.userId === currentUser?._id
+
+  );
 
   return (
     <Layout
@@ -89,8 +95,18 @@ const OrdersPage = () => {
         </div>
 
         {/* Orders List */}
-        <OrderList orders={filteredOrders} isGuest={false} />
-        <OrderList orders={GuestfilteredOrders} isGuest={true} />
+        {isAdmin && (
+          <>
+            <OrderList orders={filteredOrders} isGuest={false} />
+            <OrderList orders={GuestfilteredOrders} isGuest={true} />
+          </>
+        )}
+        {!isAdmin && (
+          <OrderList orders={myFilteredOrders} isGuest={false} />
+        )}
+
+        {/* Guest Orders List */}
+
       </div>
     </Layout>
   );

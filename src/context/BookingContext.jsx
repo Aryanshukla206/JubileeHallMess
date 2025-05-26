@@ -8,6 +8,7 @@ import { get } from 'mongoose';
 const BookingContext = createContext();
 
 export const BookingProvider = ({ children }) => {
+  console.log('⚙️ BookingProvider init');
   const { authFetch, currentUser } = useAuth();
   const { getMenuForDate } = useMenu();
 
@@ -138,7 +139,7 @@ export const BookingProvider = ({ children }) => {
   };
 
   // Add guest booking
-  const addGuestBooking = async ({ userName, contactNumber, mealType, date = getTodayDate(), quantities, hasDiscount = true }) => {
+  const addGuestBooking = async ({ userName, contactNumber, mealType, date, quantities, hasDiscount = true }) => {
     const payload = { userName, contactNumber, mealType, date, quantities, hasDiscount, status: 'pending' };
     const res = await authFetch('/api/guest-bookings', {
       method: 'POST',

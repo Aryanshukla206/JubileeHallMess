@@ -2,6 +2,7 @@ import React from 'react';
 import OrderCard from './OrderCard';
 
 const OrderList = ({ orders, isGuest }) => {
+
   // Sort orders by timestamp (latest first)
   const sortedOrders = [...orders].sort((a, b) =>
     new Date(b.timestamp) - new Date(a.timestamp)
@@ -11,7 +12,7 @@ const OrderList = ({ orders, isGuest }) => {
     <div className="space-y-4">
       {sortedOrders.length === 0 ? (
         <div className="bg-white rounded-lg shadow-md p-8 text-center text-gray-500">
-          {isGuest ? 'No guest orders found.' : 'No Resident orders found.'}
+          {isGuest ? 'No guest orders found.' : `No orders found from ${orders.userName}.`}
         </div>
       ) : (
         sortedOrders.map(order => (

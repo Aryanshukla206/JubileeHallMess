@@ -19,7 +19,7 @@ const OrderCard = ({ order, isGuest }) => {
   };
 
   const handleMarkComplete = () => {
-    markBookingComplete(order.id);
+    markBookingComplete(order._id);
     setIsCompleted(true);
     success('Order marked as completed');
   };

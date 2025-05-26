@@ -63,12 +63,12 @@ const LoginPage = () => {
               <Coffee size={24} className="text-blue-600" />
               <h1 className="ml-2 text-xl font-bold text-gray-800">Jubilee Hall Mess</h1>
             </div>
-            <Link
+            {/* <Link
               to="/guest-booking"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >
               Guest Booking
-            </Link>
+            </Link> */}
           </div>
         </div>
       </header>

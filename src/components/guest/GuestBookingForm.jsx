@@ -6,16 +6,26 @@ import QuantitySelector from '../common/QuantitySelector';
 import QRCode from '../common/QRCode';
 
 const GuestBookingForm = () => {
-  const { meals, addGuestBooking } = useBookings();
+  console.log('✏️ GuestBookingForm render start');
+  const { addGuestBooking, getAvailableItems } = useBookings();
   const { isOffDay, getOffDayReason } = useMenu();
   const { success, error } = useToast();
+
+  console.log('useBookings →', { addGuestBooking, getAvailableItems });
+  console.log('useMenu     →', { isOffDay, getOffDayReason });
+  console.log('useToast    →', { success, error });
+
+
+  if (!addGuestBooking || !getAvailableItems || !isOffDay || !getOffDayReason) {
+    return <div>Loading booking system...</div>;
+  }
 
   // Form state
   const [name, setName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
-  const [mealType, setMealType] = useState('lunch');
+  const [mealType, setMealType] = useState('');
   const [date, setDate] = useState('');
-  const [quantities, setQuantities] = useState("");
+  const [quantities, setQuantities] = useState({});
 
   // Booking state
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,12 +37,18 @@ const GuestBookingForm = () => {
   useEffect(() => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
+    console.log('Setting default date:', tomorrow);
     setDate(tomorrow.toISOString().split('T')[0]);
   }, []);
 
+  const meals = getAvailableItems(mealType, date);
+  console.log('MealBookingCard > mealType:', mealType);
+  console.log('MealBookingCard > date:', date);
+
   // Check if selected date is a mess off-day
-  const selectedDateIsOffDay = date ? isOffDay(date) : false;
-  const offDayReason = selectedDateIsOffDay ? getOffDayReason(date) : '';
+  const selectedDateIsOffDay = isOffDay?.(date) || false;
+  const offDayReason = selectedDateIsOffDay ? getOffDayReason?.(date) : '';
+
 
   const handleQuantityChange = (item, value) => {
     setQuantities(prev => ({
@@ -87,7 +103,7 @@ const GuestBookingForm = () => {
       const discount = checkDiscount();
 
       // Book meal
-      const booking = addGuestBooking(name, contactNumber, mealType, date, quantities);
+      const booking = addGuestBooking(name, contactNumber, mealType, date, quantities, discount);
 
       if (booking) {
         setBookingData(booking);
@@ -112,25 +128,30 @@ const GuestBookingForm = () => {
     tomorrow.setDate(tomorrow.getDate() + 1);
     setDate(tomorrow.toISOString().split('T')[0]);
 
-    setQuantities({
-      rice: 0,
-      dal: 0,
-      sabji: 0,
-      roti: 0
-    });
+    setQuantities({});
 
     setBookingComplete(false);
     setBookingData(null);
   };
 
+  // const MEAL_TIMES = {
+  //   breakfast: { start: '08:00', end: '09:30' },
+  //   lunch: { start: '13:00', end: '14:30' },
+  //   dinner: { start: '19:00', end: '20:30' }
+  // };
+  // const { start, end } = MEAL_TIMES[mealType];
   // Format time to be more readable (e.g., "08:00" -> "8:00 AM")
   const formatTime = (timeStr) => {
+    console.log('Formatting time:', timeStr);
     const [hours, minutes] = timeStr.split(':');
     const h = parseInt(hours);
     const period = h >= 12 ? 'PM' : 'AM';
     const formattedHours = h % 12 || 12;
     return `${formattedHours}:${minutes} ${period}`;
   };
+  if (!addGuestBooking || !getAvailableItems) {
+    return <div>Loading booking system...</div>;
+  }
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -182,9 +203,9 @@ const GuestBookingForm = () => {
                   required
                   className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <option value="breakfast">Breakfast ({formatTime(meals.breakfast.startTime)} - {formatTime(meals.breakfast.endTime)})</option>
-                  <option value="lunch">Lunch ({formatTime(meals.lunch.startTime)} - {formatTime(meals.lunch.endTime)})</option>
-                  <option value="dinner">Dinner ({formatTime(meals.dinner.startTime)} - {formatTime(meals.dinner.endTime)})</option>
+                  <option value="breakfast">Breakfast ({formatTime(meals.breakfast?.startTime)})</option>
+                  <option value="lunch">Lunch ({formatTime(meals.lunch?.startTime)})</option>
+                  <option value="dinner">Dinner ({formatTime(meals.dinner?.startTime)})</option>
                 </select>
               </div>
               <div>
@@ -333,3 +354,4 @@ const GuestBookingForm = () => {
 };
 
 export default GuestBookingForm;
+

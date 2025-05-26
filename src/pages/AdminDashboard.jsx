@@ -101,7 +101,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Meal booking summary */}
-        {/* <MealBookingSummary /> */}
+        <MealBookingSummary />
 
         {/* Two-column layout for admin tools */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
