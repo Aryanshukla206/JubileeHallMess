@@ -15,12 +15,13 @@ import OrdersPage from './pages/OrdersPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
+  console.log("h");
 
   return (
     <ToastProvider>
       <AuthProvider>
-        <BookingProvider>
-          <MenuProvider>
+        <MenuProvider>
+          <BookingProvider>
             <RebateProvider>
               <Router>
                 <Routes>
@@ -63,8 +64,8 @@ function App() {
                 </Routes>
               </Router>
             </RebateProvider>
-          </MenuProvider>
-        </BookingProvider>
+          </BookingProvider>
+        </MenuProvider>
       </AuthProvider>
     </ToastProvider>
   );

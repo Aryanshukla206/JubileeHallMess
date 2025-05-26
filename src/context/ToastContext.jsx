@@ -11,7 +11,7 @@ export const ToastProvider = ({ children }) => {
       const timer = setTimeout(() => {
         setToasts(prevToasts => prevToasts.slice(1));
       }, 3000);
-      
+
       return () => clearTimeout(timer);
     }
   }, [toasts]);
@@ -25,13 +25,13 @@ export const ToastProvider = ({ children }) => {
 
   // Success toast shorthand
   const success = (message) => addToast(message, 'success');
-  
+
   // Error toast shorthand
   const error = (message) => addToast(message, 'error');
-  
+
   // Info toast shorthand
   const info = (message) => addToast(message, 'info');
-  
+
   // Warning toast shorthand
   const warning = (message) => addToast(message, 'warning');
 
@@ -54,9 +54,9 @@ export const ToastProvider = ({ children }) => {
             <div
               key={toast.id}
               className={`px-4 py-2 rounded-md shadow-lg text-white transform transition-all duration-300 ease-in-out
-                ${toast.type === 'success' ? 'bg-green-500' : 
-                  toast.type === 'error' ? 'bg-red-500' : 
-                  toast.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'}`}
+                ${toast.type === 'success' ? 'bg-green-500' :
+                  toast.type === 'error' ? 'bg-red-500' :
+                    toast.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'}`}
             >
               {toast.message}
             </div>

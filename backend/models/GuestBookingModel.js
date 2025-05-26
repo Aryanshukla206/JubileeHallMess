@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-const BookingSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+const GuestBookingSchema = new mongoose.Schema({
+    id: { type: String, required: true, unique: true },
     userName: { type: String, required: true },
     contactNumber: { type: String, required: true },
     mealType: { type: String, enum: ['breakfast', 'lunch', 'dinner'], required: true },
@@ -12,5 +12,5 @@ const BookingSchema = new mongoose.Schema({
     timestamp: { type: Date, default: Date.now }
 });
 
-const Booking = mongoose.model('Booking', BookingSchema);
-export default Booking;
+const GuestBooking = mongoose.model('GuestBooking', GuestBookingSchema);
+export default GuestBooking;

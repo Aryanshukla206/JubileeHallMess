@@ -5,6 +5,7 @@ import { Calendar, Users } from 'lucide-react';
 
 const MealBookingSummary = () => {
   const { getBookingsByDate } = useBookings();
+  const { getAllGuestBookings } = useBookings(); // Function to get all guest bookings
   const { getMenuForDate } = useMenu(); // Function to get menu for a specific date
 
   const [bookingStats, setBookingStats] = useState({});
@@ -15,7 +16,21 @@ const MealBookingSummary = () => {
 
   useEffect(() => {
     const bookings = getBookingsByDate(selectedDate);
-
+    // bookings.push(...getAllGuestBookings().filter(booking => booking.date === selectedDate));
+    // Combine resident and guest bookings
+    const allBookings = [
+      ...bookings.map(b => ({
+        ...b,
+        type: 'Resident',
+        name: b.userName,
+        contact: 'N/A'
+      })),
+      ...getAllGuestBookings().filter(booking => booking.date === selectedDate).map(b => ({
+        ...b,
+        type: 'Guest',
+        userId: 'N/A'
+      }))
+    ];
     // Initialize stats structure dynamically based on menu items
     const initStats = {};
     ['breakfast', 'lunch', 'dinner'].forEach((mealType) => {
@@ -31,7 +46,7 @@ const MealBookingSummary = () => {
     });
 
     // Calculate totals for each meal type
-    bookings.forEach(({ mealType, quantities }) => {
+    allBookings.forEach(({ mealType, quantities }) => {
       // Increase total bookings for the meal type
       initStats[mealType].total++;
 

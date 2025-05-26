@@ -9,16 +9,16 @@ import { Calendar, Clock, AlertTriangle, CheckCircle, XCircle } from 'lucide-rea
 const ResidentDashboard = () => {
   const { currentUser } = useAuth();
   const { getUserRebates } = useRebates();
-  
+
   // Get resident's rebates
-  const rebates = currentUser ? getUserRebates(currentUser.id) : [];
-  
+  const rebates = currentUser ? getUserRebates(currentUser._id) : [];
+
   // Format date for display
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-  
+
   // Get status icon
   const getStatusIcon = (status) => {
     switch (status) {
@@ -30,7 +30,7 @@ const ResidentDashboard = () => {
         return <Clock size={16} className="text-yellow-500" />;
     }
   };
-  
+
   // Get status text color
   const getStatusTextColor = (status) => {
     switch (status) {
@@ -44,8 +44,8 @@ const ResidentDashboard = () => {
   };
 
   return (
-    <Layout 
-      title="Resident Dashboard" 
+    <Layout
+      title="Resident Dashboard"
       subtitle="Book meals and manage your mess preferences"
     >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -59,11 +59,11 @@ const ResidentDashboard = () => {
               <MealBookingCard mealType="dinner" />
             </div>
           </div>
-          
+
           {/* Rebates history section */}
           <div className="bg-white rounded-lg shadow-md p-4">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Your Rebate History</h2>
-            
+
             {rebates.length === 0 ? (
               <div className="text-center py-6 text-gray-500">
                 No rebate applications found
@@ -71,15 +71,14 @@ const ResidentDashboard = () => {
             ) : (
               <div className="space-y-3">
                 {rebates.map(rebate => (
-                  <div 
-                    key={rebate.id} 
-                    className={`p-3 rounded-md border ${
-                      rebate.status === 'approved' 
-                        ? 'border-green-200 bg-green-50' 
-                        : rebate.status === 'rejected'
-                          ? 'border-red-200 bg-red-50'
-                          : 'border-yellow-200 bg-yellow-50'
-                    }`}
+                  <div
+                    key={rebate.id}
+                    className={`p-3 rounded-md border ${rebate.status === 'approved'
+                      ? 'border-green-200 bg-green-50'
+                      : rebate.status === 'rejected'
+                        ? 'border-red-200 bg-red-50'
+                        : 'border-yellow-200 bg-yellow-50'
+                      }`}
                   >
                     <div className="flex items-start justify-between">
                       <div>
@@ -104,16 +103,16 @@ const ResidentDashboard = () => {
             )}
           </div>
         </div>
-        
+
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Rebate application form */}
           <RebateForm />
-          
+
           {/* Information card */}
           <div className="bg-white rounded-lg shadow-md p-4">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">Important Information</h3>
-            
+
             <div className="space-y-3">
               <div className="flex items-start">
                 <Clock size={18} className="text-blue-500 mr-2 mt-0.5" />
@@ -124,7 +123,7 @@ const ResidentDashboard = () => {
                   <p className="text-sm text-gray-600">Dinner: 8:00 PM - 9:00 PM</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <AlertTriangle size={18} className="text-yellow-500 mr-2 mt-0.5" />
                 <div>

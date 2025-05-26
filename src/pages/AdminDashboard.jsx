@@ -9,67 +9,67 @@ import { useBookings } from '../context/BookingContext';
 const AdminDashboard = () => {
   const { getBookingsByDate, getAllGuestBookings } = useBookings();
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  
+
   // Export bookings as CSV
-  const exportBookingsCSV = () => {
-    const bookings = getBookingsByDate(date);
-    const guestBookings = getAllGuestBookings().filter(booking => booking.date === date);
-    
-    // Combine resident and guest bookings
-    const allBookings = [
-      ...bookings.map(b => ({
-        ...b,
-        type: 'Resident',
-        name: b.userName,
-        contact: 'N/A'
-      })),
-      ...guestBookings.map(b => ({
-        ...b,
-        type: 'Guest',
-        userId: 'N/A'
-      }))
-    ];
-    
-    // Create CSV content
-    const headers = [
-      'Type', 'ID', 'Name', 'Contact', 'Meal', 'Date', 
-      'Rice Qty', 'Dal Qty', 'Sabji Qty', 'Roti Qty', 'Timestamp'
-    ];
-    
-    let csvContent = headers.join(',') + '\n';
-    
-    allBookings.forEach(booking => {
-      const row = [
-        booking.type,
-        booking.id,
-        booking.name,
-        booking.contact,
-        booking.mealType,
-        booking.date,
-        booking.quantities.rice || 0,
-        booking.quantities.dal || 0,
-        booking.quantities.sabji || 0,
-        booking.quantities.roti || 0,
-        booking.timestamp
-      ];
-      
-      csvContent += row.join(',') + '\n';
-    });
-    
-    // Create and download the CSV file
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', `bookings-${date}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const exportBookingsCSV = () => {
+  //   const bookings = getBookingsByDate(date);
+  //   const guestBookings = getAllGuestBookings().filter(booking => booking.date === date);
+
+  //   // Combine resident and guest bookings
+  //   const allBookings = [
+  //     ...bookings.map(b => ({
+  //       ...b,
+  //       type: 'Resident',
+  //       name: b.userName,
+  //       contact: 'N/A'
+  //     })),
+  //     ...guestBookings.map(b => ({
+  //       ...b,
+  //       type: 'Guest',
+  //       userId: 'N/A'
+  //     }))
+  //   ];
+
+  //   // Create CSV content
+  //   const headers = [
+  //     'Type', 'ID', 'Name', 'Contact', 'Meal', 'Date', 
+  //     'Rice Qty', 'Dal Qty', 'Sabji Qty', 'Roti Qty', 'Timestamp'
+  //   ];
+
+  //   let csvContent = headers.join(',') + '\n';
+
+  //   allBookings.forEach(booking => {
+  //     const row = [
+  //       booking.type,
+  //       booking.id,
+  //       booking.name,
+  //       booking.contact,
+  //       booking.mealType,
+  //       booking.date,
+  //       booking.quantities.rice || 0,
+  //       booking.quantities.dal || 0,
+  //       booking.quantities.sabji || 0,
+  //       booking.quantities.roti || 0,
+  //       booking.timestamp
+  //     ];
+
+  //     csvContent += row.join(',') + '\n';
+  //   });
+
+  //   // Create and download the CSV file
+  //   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  //   const url = URL.createObjectURL(blob);
+  //   const link = document.createElement('a');
+  //   link.setAttribute('href', url);
+  //   link.setAttribute('download', `bookings-${date}.csv`);
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   return (
-    <Layout 
-      title="Admin Dashboard" 
+    <Layout
+      title="Admin Dashboard"
       subtitle="Manage mess operations and monitor bookings"
     >
       <div className="space-y-8">
@@ -87,8 +87,9 @@ const AdminDashboard = () => {
               className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
-          
-          <div className="flex space-x-3">
+
+          {/* Exports booking button */}
+          {/* <div className="flex space-x-3">
             <button
               onClick={exportBookingsCSV}
               className="flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
@@ -96,27 +97,27 @@ const AdminDashboard = () => {
               <Download size={16} className="mr-1" />
               Export Bookings
             </button>
-          </div>
+          </div> */}
         </div>
-        
+
         {/* Meal booking summary */}
-        <MealBookingSummary />
-        
+        {/* <MealBookingSummary /> */}
+
         {/* Two-column layout for admin tools */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Rebate manager */}
           <RebateManager />
-          
+
           {/* Off-day manager */}
           <OffDayManager />
         </div>
-        
+
         {/* Reports section */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        {/* <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-blue-600 text-white p-4">
             <h2 className="text-xl font-bold">Reports & Analytics</h2>
           </div>
-          
+
           <div className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
@@ -132,7 +133,7 @@ const AdminDashboard = () => {
                   Generate Report
                 </button>
               </div>
-              
+
               <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                 <div className="flex items-center mb-3">
                   <Calendar size={20} className="text-blue-600 mr-2" />
@@ -146,7 +147,7 @@ const AdminDashboard = () => {
                   Generate Report
                 </button>
               </div>
-              
+
               <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                 <div className="flex items-center mb-3">
                   <Calendar size={20} className="text-blue-600 mr-2" />
@@ -162,7 +163,7 @@ const AdminDashboard = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </Layout>
   );

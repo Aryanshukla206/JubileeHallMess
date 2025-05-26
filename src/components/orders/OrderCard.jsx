@@ -4,7 +4,7 @@ import { useBookings } from '../../context/BookingContext';
 import { useToast } from '../../context/ToastContext';
 import { Clock, User, Check } from 'lucide-react';
 
-const OrderCard = ({ order }) => {
+const OrderCard = ({ order, isGuest }) => {
   const { currentUser, isAdmin } = useAuth();
   const { markBookingComplete } = useBookings();
   const { success } = useToast();
@@ -31,7 +31,7 @@ const OrderCard = ({ order }) => {
           <div>
             <div className="flex items-center">
               <User size={16} className="text-gray-500 mr-1" />
-              <h3 className="font-medium text-gray-800">{order.userName}</h3>
+              <h3 className="font-medium text-gray-800">{order.userName} <span className='font-light text-sm'>{isGuest ? "- Guest" : "- Resident"}</span> </h3>
             </div>
 
             <div className="flex items-center mt-1 text-gray-500 text-sm">

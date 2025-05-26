@@ -5,9 +5,11 @@ import { useBookings } from '../../context/BookingContext';
 import { useRebates } from '../../context/RebateContext';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
+import getTodayDate from '../../utils/getTodayDate';
 
-const MealBookingCard = ({ mealType, date = new Date().toISOString().split('T')[0] }) => {
-  const { meals, hasBookedMeal, addBooking, canBookMeal } = useBookings();
+const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
+  // console.log("ddddddddddddddddddd------> ", date);
+  const { hasBookedMeal, addBooking, canBookMeal, getAvailableItems } = useBookings();
   const { isUserOnRebate } = useRebates();
   const { currentUser } = useAuth();
   const { success, error } = useToast();
@@ -17,16 +19,21 @@ const MealBookingCard = ({ mealType, date = new Date().toISOString().split('T')[
   const [isBookingEnabled, setIsBookingEnabled] = useState(false);
   const [hasBooked, setHasBooked] = useState(false);
   const [isOnRebate, setIsOnRebate] = useState(false);
-  const [isTimeValid, setIsTimeValid] = useState(true);
+  const [isTimeValid, setIsTimeValid] = useState(false);
 
-  const meal = meals[mealType];
+  const meal = getAvailableItems(mealType, date) || [];
+  console.log('MealBookingCard > mealType:', mealType);
+  console.log('MealBookingCard > date:', date);
+  // console.log('MealBookingCard > items:', meal);
 
   // Check if booking is possible based on time, rebate status, and existing bookings
   useEffect(() => {
     if (currentUser) {
-      const bookedAlready = hasBookedMeal(currentUser.id, mealType, date);
-      const onRebate = isUserOnRebate(currentUser.id, date);
+      const bookedAlready = hasBookedMeal(currentUser._id, mealType, date);
+      const onRebate = isUserOnRebate(currentUser._id, date);
       const timeValid = canBookMeal(mealType, date);
+      // const timeValid = true; // Temporarily set to true for testing
+      console.log("timeValid:", timeValid);
 
       setHasBooked(bookedAlready);
       setIsOnRebate(onRebate);
@@ -57,7 +64,8 @@ const MealBookingCard = ({ mealType, date = new Date().toISOString().split('T')[
     try {
       const booking = addBooking(mealType, quantities);
       if (booking) {
-        success(`${meal.name} booked successfully!`);
+        console.log("Booking successful:", booking);
+        success(`${mealType} booked successfully!`);
         setHasBooked(true);
         setIsBookingEnabled(false);
       } else {
@@ -68,6 +76,13 @@ const MealBookingCard = ({ mealType, date = new Date().toISOString().split('T')[
     }
   };
 
+  const MEAL_TIMES = {
+    breakfast: { start: '08:00', end: '09:30' },
+    lunch: { start: '13:00', end: '14:30' },
+    dinner: { start: '19:00', end: '20:30' }
+  };
+  const { start, end } = MEAL_TIMES[mealType];
+
   // Format time to be more readable (e.g., "08:00" -> "8:00 AM")
   const formatTime = (timeStr) => {
     const [hours, minutes] = timeStr.split(':');
@@ -76,6 +91,7 @@ const MealBookingCard = ({ mealType, date = new Date().toISOString().split('T')[
     const formattedHours = h % 12 || 12;
     return `${formattedHours}:${minutes} ${period}`;
   };
+
   const formatMeal = (meal) => {
     return meal.charAt(0).toUpperCase() + meal.slice(1);
   };
@@ -84,10 +100,12 @@ const MealBookingCard = ({ mealType, date = new Date().toISOString().split('T')[
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
       {/* Card header with meal type and timing */}
       <div className="bg-blue-600 text-white p-4">
-        <h3 className="text-xl font-bold">{meal.name}</h3>
+        <h3 className="text-xl font-bold">{mealType}</h3>
         <div className="flex items-center mt-2 text-blue-100">
           <Clock size={16} className="mr-1" />
-          <span>{formatTime(meal.startTime)} - {formatTime(meal.endTime)}</span>
+          <span>{formatTime(start)} - {formatTime(end)}</span>
+          {/* {console.log(formatTime(start))} */}
+          {/* {console.log(formatTime(end))} */}
         </div>
       </div>
 
@@ -111,7 +129,7 @@ const MealBookingCard = ({ mealType, date = new Date().toISOString().split('T')[
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="space-y-3">
-              {meal.items.map(item => (
+              {meal.map(item => (
                 <QuantitySelector
                   key={item}
                   name={item}

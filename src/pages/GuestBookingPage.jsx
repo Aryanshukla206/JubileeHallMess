@@ -4,6 +4,8 @@ import GuestBookingForm from '../components/guest/GuestBookingForm';
 import { Coffee, LogIn, CalendarDays, Clock, AlertTriangle } from 'lucide-react';
 
 const GuestBookingPage = () => {
+
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <header className="bg-white border-b border-gray-200 py-4">
@@ -13,8 +15,8 @@ const GuestBookingPage = () => {
               <Coffee size={24} className="text-blue-600" />
               <h1 className="ml-2 text-xl font-bold text-gray-800">Jubilee Hall Mess</h1>
             </div>
-            <Link 
-              to="/login" 
+            <Link
+              to="/login"
               className="flex items-center px-4 py-2 text-blue-600 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors"
             >
               <LogIn size={18} className="mr-1" />
@@ -23,32 +25,32 @@ const GuestBookingPage = () => {
           </div>
         </div>
       </header>
-      
-      {/* Hero section */}
+
+      {/* NavBar section */}
       <div className="bg-blue-600 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Guest Meal Booking</h1>
             <p className="text-blue-100 max-w-xl mx-auto">
-              Book your meals in advance with Jubilee Hall Mess. Enjoy delicious, 
+              Book your meals in advance with Jubilee Hall Mess. Enjoy delicious,
               nutritious food with our easy booking system.
             </p>
           </div>
         </div>
       </div>
-      
+
       <main className="flex-1 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <GuestBookingForm />
             </div>
-            
+
             <div className="space-y-6">
               {/* Info card */}
               <div className="bg-white rounded-lg shadow-md p-5">
                 <h2 className="text-lg font-bold text-gray-800 mb-4">Booking Information</h2>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-start">
                     <CalendarDays size={20} className="text-blue-500 mr-2 mt-0.5" />
@@ -59,7 +61,7 @@ const GuestBookingPage = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <Clock size={20} className="text-green-500 mr-2 mt-0.5" />
                     <div>
@@ -69,7 +71,7 @@ const GuestBookingPage = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <AlertTriangle size={20} className="text-yellow-500 mr-2 mt-0.5" />
                     <div>
@@ -81,11 +83,11 @@ const GuestBookingPage = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Meal timings card */}
               <div className="bg-white rounded-lg shadow-md p-5">
                 <h2 className="text-lg font-bold text-gray-800 mb-4">Meal Timings</h2>
-                
+
                 <div className="space-y-3">
                   <div className="flex justify-between items-center py-2 border-b border-gray-100">
                     <span className="font-medium">Breakfast</span>
@@ -105,7 +107,7 @@ const GuestBookingPage = () => {
           </div>
         </div>
       </main>
-      
+
       <footer className="bg-white border-t border-gray-200 py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
@@ -114,7 +116,7 @@ const GuestBookingPage = () => {
               <p className="text-gray-600">Making meal management easier</p>
             </div>
             <div className="text-gray-500 text-sm">
-              <p>Contact: mess-admin@jubileehall.com</p>
+              <p>Contact: aryan.msc23.du@gmail.com</p>
               <p>© {new Date().getFullYear()} Jubilee Hall. All rights reserved.</p>
             </div>
           </div>

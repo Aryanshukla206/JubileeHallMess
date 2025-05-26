@@ -1,36 +1,15 @@
 import mongoose from 'mongoose';
 
-const rebateSchema = mongoose.Schema(
-    {
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'User',
-        },
-        startDate: {
-            type: Date,
-            required: true,
-        },
-        endDate: {
-            type: Date,
-            required: true,
-        },
-        reason: {
-            type: String,
-            required: true,
-        },
-        status: {
-            type: String,
-            required: true,
-            enum: ['pending', 'approved', 'rejected'],
-            default: 'pending',
-        },
-    },
-    {
-        timestamps: true,
-    }
-);
+const RebateSchema = new mongoose.Schema({
+    id: { type: String, required: true, unique: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    userName: { type: String, required: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+    reason: { type: String, required: true },
+    status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+    appliedAt: { type: Date, default: Date.now }
+});
 
-const Rebate = mongoose.model('Rebate', rebateSchema);
-
+const Rebate = mongoose.model('Rebate', RebateSchema);
 export default Rebate;

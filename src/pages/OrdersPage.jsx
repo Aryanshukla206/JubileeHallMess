@@ -7,15 +7,22 @@ import { Filter, Search } from 'lucide-react';
 
 const OrdersPage = () => {
   const { currentUser, isAdmin } = useAuth();
-  const { getTodayBookings, getBookingsByDate } = useBookings();
-  
+  const { getTodayBookings, getBookingsByDate, getGuestBookingsByDate } = useBookings();
+
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterMeal, setFilterMeal] = useState('all');
-  
+
   // Get orders based on date
   const orders = getBookingsByDate(date);
-  
+  console.log("guestBookings------> ", getGuestBookingsByDate(date))
+  const guestOrders = getGuestBookingsByDate(date);
+
+  const GuestfilteredOrders = guestOrders.filter(guestOrder => {
+    const matchesSearch = guestOrder.userName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesMeal = filterMeal === 'all' || guestOrder.mealType === filterMeal;
+    return matchesSearch && matchesMeal;
+  });
   // Filter orders based on search term and meal type
   const filteredOrders = orders.filter(order => {
     const matchesSearch = order.userName.toLowerCase().includes(searchTerm.toLowerCase());
@@ -24,8 +31,8 @@ const OrdersPage = () => {
   });
 
   return (
-    <Layout 
-      title="Meal Orders" 
+    <Layout
+      title="Meal Orders"
       subtitle={`Orders for ${new Date(date).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}
     >
       <div className="space-y-6">
@@ -44,7 +51,7 @@ const OrdersPage = () => {
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            
+
             <div>
               <label htmlFor="mealFilter" className="block text-sm font-medium text-gray-700 mb-1">
                 Meal Type
@@ -61,7 +68,7 @@ const OrdersPage = () => {
                 <option value="dinner">Dinner</option>
               </select>
             </div>
-            
+
             <div className="md:col-span-2">
               <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
                 Search by Name
@@ -80,9 +87,10 @@ const OrdersPage = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Orders List */}
-        <OrderList orders={filteredOrders} />
+        <OrderList orders={filteredOrders} isGuest={false} />
+        <OrderList orders={GuestfilteredOrders} isGuest={true} />
       </div>
     </Layout>
   );

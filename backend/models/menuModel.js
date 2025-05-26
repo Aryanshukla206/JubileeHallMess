@@ -1,21 +1,20 @@
 import mongoose from 'mongoose';
 
-const menuSchema = mongoose.Schema(
-    {
-        day: {
-            type: String,
-            required: true,
-            enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
-        },
-        breakfast: [String],
-        lunch: [String],
-        dinner: [String],
-    },
-    {
-        timestamps: true,
-    }
-);
+const DayMenuSchema = new mongoose.Schema({
+    breakfast: [String],
+    lunch: [String],
+    dinner: [String]
+}, { _id: false });
 
-const Menu = mongoose.model('Menu', menuSchema);
+const MenuSchema = new mongoose.Schema({
+    monday: DayMenuSchema,
+    tuesday: DayMenuSchema,
+    wednesday: DayMenuSchema,
+    thursday: DayMenuSchema,
+    friday: DayMenuSchema,
+    saturday: DayMenuSchema,
+    sunday: DayMenuSchema
+});
 
+const Menu = mongoose.model('Menu', MenuSchema);
 export default Menu;

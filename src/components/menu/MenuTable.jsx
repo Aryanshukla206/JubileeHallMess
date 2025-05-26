@@ -5,9 +5,11 @@ import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 
 const MenuTable = () => {
-  const { menu, updateMenu } = useMenu();
+  const { menu, updateMenu, updateDayMeal } = useMenu();
   const { isAdmin } = useAuth();
   const { success } = useToast();
+
+  console.log("-----------> ", menu);
 
   const [editMode, setEditMode] = useState({
     isEditing: false,
@@ -17,7 +19,9 @@ const MenuTable = () => {
 
   const [editedItems, setEditedItems] = useState([]);
 
-  const days = Object.keys(menu);
+  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+  // console.log("days ----------> ", days);
   const mealTypes = ['breakfast', 'lunch', 'dinner'];
 
   // Format day name for display
@@ -61,9 +65,11 @@ const MenuTable = () => {
   const handleSave = () => {
     // Filter out empty items
     const filteredItems = editedItems.filter(item => item.trim() !== '');
+    console.log("Filtered items: ", filteredItems);
 
     // Update menu
-    updateMenu(editMode.day, editMode.meal, filteredItems);
+    // updateMenu(editMode.day, editMode.meal, filteredItems);
+    updateDayMeal(editMode.day, editMode.meal, filteredItems);
 
     // Reset edit mode
     setEditMode({
@@ -84,6 +90,7 @@ const MenuTable = () => {
       meal: null
     });
   };
+  // console.log("Menu items: ", menu["sunday"]["breakfast"]);
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -111,9 +118,11 @@ const MenuTable = () => {
           <tbody>
             {days.map(day => (
               <tr key={day} className="hover:bg-gray-50">
+                {console.log("before", day)}
                 <td className="border-b border-gray-200 px-4 py-4 text-sm font-medium text-gray-800">
                   {formatDay(day)}
                 </td>
+                {console.log(day)}
                 {mealTypes.map(mealType => (
                   <td key={`${day}-${mealType}`} className="border-b border-gray-200 px-4 py-4 text-sm text-gray-600">
                     {editMode.isEditing && editMode.day === day && editMode.meal === mealType ? (
@@ -158,6 +167,7 @@ const MenuTable = () => {
                         </div>
                       </div>
                     ) : (
+
                       <div>
                         <ul className="list-disc list-inside">
                           {menu[day][mealType].map((item, index) => (

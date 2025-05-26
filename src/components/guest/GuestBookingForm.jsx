@@ -15,19 +15,14 @@ const GuestBookingForm = () => {
   const [contactNumber, setContactNumber] = useState('');
   const [mealType, setMealType] = useState('lunch');
   const [date, setDate] = useState('');
-  const [quantities, setQuantities] = useState({
-    rice: 0,
-    dal: 0,
-    sabji: 0,
-    roti: 0
-  });
-  
+  const [quantities, setQuantities] = useState("");
+
   // Booking state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingComplete, setBookingComplete] = useState(false);
   const [bookingData, setBookingData] = useState(null);
   const [bookingDiscount, setBookingDiscount] = useState(0);
-  
+
   // Setup date default (tomorrow)
   useEffect(() => {
     const tomorrow = new Date();
@@ -49,11 +44,11 @@ const GuestBookingForm = () => {
   // Calculate if booking is made at least 1 hour in advance for discount
   const checkDiscount = () => {
     if (!date || !mealType) return 0;
-    
+
     const bookingTime = new Date();
     const mealStartTime = new Date(`${date}T${meals[mealType].startTime}`);
     const hourDiff = (mealStartTime - bookingTime) / (1000 * 60 * 60);
-    
+
     return hourDiff >= 1 ? 10 : 0;
   };
 
@@ -64,35 +59,36 @@ const GuestBookingForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Validate form
     if (!name || !contactNumber || !mealType || !date) {
       error("Please fill all required fields");
       return;
     }
-    
+
     // Validate at least one item is selected
     const totalItems = Object.values(quantities).reduce((sum, q) => sum + q, 0);
+    console.log(totalItems);
     if (totalItems === 0) {
       error("Please select at least one item");
       return;
     }
-    
+
     // Check if selected date is a mess off-day
     if (selectedDateIsOffDay) {
       error(`Cannot book for ${date}. Mess is closed: ${offDayReason}`);
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Calculate discount
       const discount = checkDiscount();
-      
+
       // Book meal
       const booking = addGuestBooking(name, contactNumber, mealType, date, quantities);
-      
+
       if (booking) {
         setBookingData(booking);
         setBookingComplete(true);
@@ -111,18 +107,18 @@ const GuestBookingForm = () => {
     setName('');
     setContactNumber('');
     setMealType('lunch');
-    
+
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     setDate(tomorrow.toISOString().split('T')[0]);
-    
+
     setQuantities({
       rice: 0,
       dal: 0,
       sabji: 0,
       roti: 0
     });
-    
+
     setBookingComplete(false);
     setBookingData(null);
   };
@@ -141,7 +137,7 @@ const GuestBookingForm = () => {
       {!bookingComplete ? (
         <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Guest Meal Booking</h2>
-          
+
           <div className="space-y-4">
             {/* Personal details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -172,7 +168,7 @@ const GuestBookingForm = () => {
                 />
               </div>
             </div>
-            
+
             {/* Meal details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -206,7 +202,7 @@ const GuestBookingForm = () => {
                 />
               </div>
             </div>
-            
+
             {/* Off-day warning */}
             {selectedDateIsOffDay && (
               <div className="p-3 bg-red-50 border border-red-200 rounded-md text-red-700">
@@ -215,7 +211,7 @@ const GuestBookingForm = () => {
                 <p className="text-sm mt-1">Please select a different date.</p>
               </div>
             )}
-            
+
             {/* Discount information */}
             {bookingDiscount > 0 && !selectedDateIsOffDay && (
               <div className="p-3 bg-green-50 border border-green-200 rounded-md text-green-700">
@@ -223,7 +219,7 @@ const GuestBookingForm = () => {
                 <p className="text-sm">Booking at least 1 hour before meal time.</p>
               </div>
             )}
-            
+
             {/* Quantity selection */}
             <div className="mt-4">
               <h3 className="font-medium text-gray-800 mb-3">Meal Quantity</h3>
@@ -239,15 +235,14 @@ const GuestBookingForm = () => {
                 ))}
               </div>
             </div>
-            
+
             <button
               type="submit"
               disabled={isSubmitting || selectedDateIsOffDay}
-              className={`w-full p-2 rounded-md font-medium transition-colors ${
-                isSubmitting || selectedDateIsOffDay
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
+              className={`w-full p-2 rounded-md font-medium transition-colors ${isSubmitting || selectedDateIsOffDay
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
             >
               {isSubmitting ? 'Processing...' : 'Book Meal'}
             </button>
@@ -261,14 +256,14 @@ const GuestBookingForm = () => {
               Your meal has been booked. Please save this confirmation.
             </p>
           </div>
-          
+
           <div className="flex justify-center mb-6">
             <QRCode data={JSON.stringify(bookingData)} />
           </div>
-          
+
           <div className="border-t border-b border-gray-200 py-4 mb-4">
             <h3 className="text-lg font-medium text-gray-800 mb-3">Booking Details</h3>
-            
+
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-gray-600">Booking ID:</span>
@@ -296,7 +291,7 @@ const GuestBookingForm = () => {
                   {formatTime(meals[bookingData?.mealType]?.startTime)} - {formatTime(meals[bookingData?.mealType]?.endTime)}
                 </span>
               </div>
-              
+
               {bookingData?.hasDiscount && (
                 <div className="flex justify-between text-green-600 font-medium">
                   <span>Discount:</span>
@@ -305,7 +300,7 @@ const GuestBookingForm = () => {
               )}
             </div>
           </div>
-          
+
           <div className="mb-4">
             <h3 className="text-lg font-medium text-gray-800 mb-2">Items Ordered</h3>
             <ul className="space-y-1">
@@ -322,7 +317,7 @@ const GuestBookingForm = () => {
               })}
             </ul>
           </div>
-          
+
           <div className="text-center">
             <button
               onClick={resetForm}
