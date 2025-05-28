@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext();
 const STORAGE_KEY = 'jubilee_auth';
-const REACT_APP_API_URL = 'https://jubilee-hall-mess.vercel.app/api';
+const REACT_APP_API_URL = 'https://jubilee-hall-mess.vercel.app';
 
 // Replace with your actual API URL
 // Base URL of your API, set via .env (e.g. REACT_APP_API_URL=http://localhost:5000)
