@@ -1,3 +1,28 @@
-/node_modules
+# Node modules
+node_modules/
 
+# Environment variables
 .env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Optional npm cache directory
+.npm
+
+# Debug output
+debug.log*
+
+# Vercel and Netlify build output (optional)
+.vercel
+.netlify
+
+# macOS system files
+.DS_Store
