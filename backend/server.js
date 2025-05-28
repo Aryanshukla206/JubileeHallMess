@@ -28,7 +28,7 @@ const startServer = async () => {
 
     // Allow requests from your React app's origin
     const corsOptions = {
-        origin: [process.env.CLIENT_URL, 'http://localhost:5173', "https://jubileehallmess.netlify.app"], // React's default port
+        origin: [process.env.CLIENT_URL, 'http://localhost:5173', "https://jubileehallmess.netlify.app", "https://jubileehallmess.vercel.app"], // React's default port
         credentials: true, // Enable cookies/sessions if needed
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
         allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
