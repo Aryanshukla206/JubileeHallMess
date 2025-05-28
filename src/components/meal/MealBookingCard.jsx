@@ -22,8 +22,8 @@ const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
   const [isTimeValid, setIsTimeValid] = useState(false);
 
   const meal = getAvailableItems(mealType, date) || [];
-  console.log('MealBookingCard > mealType:', mealType);
-  console.log('MealBookingCard > date:', date);
+  // console.log('MealBookingCard > mealType:', mealType);
+  // console.log('MealBookingCard > date:', date);
   // console.log('MealBookingCard > items:', meal);
 
   // Check if booking is possible based on time, rebate status, and existing bookings
@@ -33,7 +33,7 @@ const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
       const onRebate = isUserOnRebate(currentUser._id, date);
       const timeValid = canBookMeal(mealType, date);
       // const timeValid = true; // Temporarily set to true for testing
-      console.log("timeValid:", timeValid);
+      // console.log("timeValid:", timeValid);
 
       setHasBooked(bookedAlready);
       setIsOnRebate(onRebate);
@@ -64,7 +64,7 @@ const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
     try {
       const booking = addBooking(mealType, quantities);
       if (booking) {
-        console.log("Booking successful:", booking);
+        // console.log("Booking successful:", booking);
         success(`${mealType} booked successfully!`);
         setHasBooked(true);
         setIsBookingEnabled(false);

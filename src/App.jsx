@@ -15,7 +15,6 @@ import OrdersPage from './pages/OrdersPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
-  console.log("h");
 
   return (
     <ToastProvider>
@@ -26,7 +25,7 @@ function App() {
               <Router>
                 <Routes>
                   <Route path="/login" element={<LoginPage />} />
-                  <Route path="/guest-booking" element={<GuestBookingPage />} />
+                  {/* <Route path="/guest-booking" element={<GuestBookingPage />} /> */}
                   <Route
                     path="/dashboard"
                     element={
@@ -65,9 +64,9 @@ function App() {
               </Router>
             </RebateProvider>
           </BookingProvider>
-        </MenuProvider>
-      </AuthProvider>
-    </ToastProvider>
+        </MenuProvider >
+      </AuthProvider >
+    </ToastProvider >
   );
 }
 

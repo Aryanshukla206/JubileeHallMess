@@ -1,14 +1,14 @@
 // src/contexts/AuthContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
+
 const AuthContext = createContext();
 const STORAGE_KEY = 'jubilee_auth';
-const REACT_APP_API_URL = 'http://localhost:3000';
 
 // Replace with your actual API URL
 // Base URL of your API, set via .env (e.g. REACT_APP_API_URL=http://localhost:5000)
 
-const API_URL = REACT_APP_API_URL || '';
+const API_URL = "https://mess-management-backend-z5ok7suje.vercel.app";
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   // Login via API, store token+user
   const login = async (email, password) => {
-    const res = await fetch('http://localhost:3000/api/auth/login', {
+    const res = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
       isAdmin: currentUser?.role === 'admin',
       isResident: currentUser?.role === 'resident',
     }}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };

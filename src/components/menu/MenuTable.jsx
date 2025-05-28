@@ -9,7 +9,7 @@ const MenuTable = () => {
   const { isAdmin } = useAuth();
   const { success } = useToast();
 
-  console.log("-----------> ", menu);
+  // console.log("-----------> ", menu);
 
   const [editMode, setEditMode] = useState({
     isEditing: false,
@@ -65,7 +65,7 @@ const MenuTable = () => {
   const handleSave = () => {
     // Filter out empty items
     const filteredItems = editedItems.filter(item => item.trim() !== '');
-    console.log("Filtered items: ", filteredItems);
+    // console.log("Filtered items: ", filteredItems);
 
     // Update menu
     // updateMenu(editMode.day, editMode.meal, filteredItems);
@@ -118,11 +118,9 @@ const MenuTable = () => {
           <tbody>
             {days.map(day => (
               <tr key={day} className="hover:bg-gray-50">
-                {console.log("before", day)}
                 <td className="border-b border-gray-200 px-4 py-4 text-sm font-medium text-gray-800">
                   {formatDay(day)}
                 </td>
-                {console.log(day)}
                 {mealTypes.map(mealType => (
                   <td key={`${day}-${mealType}`} className="border-b border-gray-200 px-4 py-4 text-sm text-gray-600">
                     {editMode.isEditing && editMode.day === day && editMode.meal === mealType ? (

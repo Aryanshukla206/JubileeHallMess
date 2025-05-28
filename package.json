@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@netlify/functions": "^3.1.10",
     "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
@@ -26,6 +27,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.22.3",
     "rembase-web": "^0.1.4",
+    "serverless-http": "^3.2.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

@@ -16,7 +16,7 @@ const OrdersPage = () => {
 
   // Get orders based on date
   const orders = getBookingsByDate(date);
-  console.log("guestBookings------> ", getGuestBookingsByDate(date))
+  // console.log("guestBookings------> ", getGuestBookingsByDate(date))
   const guestOrders = getGuestBookingsByDate(date);
 
   const GuestfilteredOrders = guestOrders.filter(guestOrder => {
