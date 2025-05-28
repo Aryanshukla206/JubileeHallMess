@@ -6,14 +6,14 @@ import QuantitySelector from '../common/QuantitySelector';
 import QRCode from '../common/QRCode';
 
 const GuestBookingForm = () => {
-  // console.log('✏️ GuestBookingForm render start');
+  // //console.log('✏️ GuestBookingForm render start');
   const { addGuestBooking, getAvailableItems } = useBookings();
   const { isOffDay, getOffDayReason } = useMenu();
   const { success, error } = useToast();
 
-  // console.log('useBookings →', { addGuestBooking, getAvailableItems });
-  // console.log('useMenu     →', { isOffDay, getOffDayReason });
-  // console.log('useToast    →', { success, error });
+  // //console.log('useBookings →', { addGuestBooking, getAvailableItems });
+  // //console.log('useMenu     →', { isOffDay, getOffDayReason });
+  // //console.log('useToast    →', { success, error });
 
 
   if (!addGuestBooking || !getAvailableItems || !isOffDay || !getOffDayReason) {
@@ -37,13 +37,13 @@ const GuestBookingForm = () => {
   useEffect(() => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    // console.log('Setting default date:', tomorrow);
+    // //console.log('Setting default date:', tomorrow);
     setDate(tomorrow.toISOString().split('T')[0]);
   }, []);
 
   const meals = getAvailableItems(mealType, date);
-  // console.log('MealBookingCard > mealType:', mealType);
-  // console.log('MealBookingCard > date:', date);
+  // //console.log('MealBookingCard > mealType:', mealType);
+  // //console.log('MealBookingCard > date:', date);
 
   // Check if selected date is a mess off-day
   const selectedDateIsOffDay = isOffDay?.(date) || false;
@@ -84,7 +84,7 @@ const GuestBookingForm = () => {
 
     // Validate at least one item is selected
     const totalItems = Object.values(quantities).reduce((sum, q) => sum + q, 0);
-    // console.log(totalItems);
+    // //console.log(totalItems);
     if (totalItems === 0) {
       error("Please select at least one item");
       return;
@@ -142,7 +142,7 @@ const GuestBookingForm = () => {
   // const { start, end } = MEAL_TIMES[mealType];
   // Format time to be more readable (e.g., "08:00" -> "8:00 AM")
   const formatTime = (timeStr) => {
-    // console.log('Formatting time:', timeStr);
+    // //console.log('Formatting time:', timeStr);
     const [hours, minutes] = timeStr.split(':');
     const h = parseInt(hours);
     const period = h >= 12 ? 'PM' : 'AM';

@@ -8,7 +8,7 @@ import { get } from 'mongoose';
 const BookingContext = createContext();
 
 export const BookingProvider = ({ children }) => {
-  console.log('⚙️ BookingProvider init');
+  //console.log('⚙️ BookingProvider init');
   const { authFetch, currentUser } = useAuth();
   const { getMenuForDate } = useMenu();
 
@@ -25,42 +25,42 @@ export const BookingProvider = ({ children }) => {
   // const getTodayDate = () => {
   //   return formatInTimeZone(new Date(), 'Asia/Kolkata', 'yyyy-MM-dd');
   // };
-  console.log("------------ >>>>>>  ", getTodayDate())
+  //console.log("------------ >>>>>>  ", getTodayDate())
 
 
 
 
   const canBookMeal = (mealType, date = getTodayDate()) => {
-    console.log("date from getTodayDate ---------> ", date)
+    //console.log("date from getTodayDate ---------> ", date)
     const now = new Date();
     const window = MEAL_TIME_WINDOWS[mealType];
-    console.log("canBook meal ------> ", now, window)
+    //console.log("canBook meal ------> ", now, window)
 
     if (!window || !window.end) return false;
 
     // Parse end time from "HH:MM" format
     const [endH, endM] = window.end.split(':').map(Number);
-    // console.log(`Meal end time for ${mealType}: ${endH}:${endM}`);
+    // //console.log(`Meal end time for ${mealType}: ${endH}:${endM}`);
 
     // Construct a Date object for meal end time on the given date
     const mealEndTime = new Date();
 
-    // console.log("mealEndTime ------> ", mealEndTime);
+    // //console.log("mealEndTime ------> ", mealEndTime);
     mealEndTime.setHours(endH, endM, 0, 0); // HH, MM, SS, MS
-    console.log("mealEndTime ------> ", mealEndTime);
+    //console.log("mealEndTime ------> ", mealEndTime);
 
-    // console.log(`Checking booking for ${mealType} on ${date} with end time ${mealEndTime.toISOString()}`);
+    // //console.log(`Checking booking for ${mealType} on ${date} with end time ${mealEndTime.toISOString()}`);
 
     // If booking is for today
     if (date === getTodayDate()) {
-      // console.log("------------> ", now < mealEndTime ? "Booking is allowed" : "Booking is not allowed");
+      // //console.log("------------> ", now < mealEndTime ? "Booking is allowed" : "Booking is not allowed");
       return now < mealEndTime;
     }
 
     // If booking is for a future date
     const bookingDate = new Date(date);
     const today = new Date(getTodayDate());
-    // console.log(`Booking date: ${bookingDate.toISOString()}, Today: ${today.toISOString()}`);
+    // //console.log(`Booking date: ${bookingDate.toISOString()}, Today: ${today.toISOString()}`);
     return bookingDate > today;
   };
 
@@ -72,7 +72,7 @@ export const BookingProvider = ({ children }) => {
 
 
 
-  // console.log("getTodayDate ------> ", getTodayDate());
+  // //console.log("getTodayDate ------> ", getTodayDate());
 
   // Fetch both resident and guest bookings once authenticated
   useEffect(() => {
@@ -117,7 +117,7 @@ export const BookingProvider = ({ children }) => {
   // Add resident booking
   const addBooking = async (mealType, quantities, date = getTodayDate()) => {
     if (!currentUser) return null;
-    // console.log(currentUser);
+    // //console.log(currentUser);
     const payload = {
       userId: currentUser._id,
       userName: currentUser.name,
@@ -133,7 +133,7 @@ export const BookingProvider = ({ children }) => {
       body: JSON.stringify(payload)
     });
     const created = await res.json();
-    // console.log("status ------> ", res.status);
+    // //console.log("status ------> ", res.status);
     setBookings(prev => [...prev, created]);
     return created;
   };
@@ -169,7 +169,7 @@ export const BookingProvider = ({ children }) => {
     return menu?.[mealType] || [];
   };
 
-  // console.log(getAvailableItems('breakfast', '2023-10-01'));
+  // //console.log(getAvailableItems('breakfast', '2023-10-01'));
   // Reports…
   const generateMonthlySummary = (month, year) => {
     const start = new Date(year, month - 1, 1);

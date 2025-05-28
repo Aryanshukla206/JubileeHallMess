@@ -31,7 +31,7 @@ const RebateForm = () => {
     setIsSubmitting(true);
 
     try {
-      // console.log("Applying for rebate:", { startDate, endDate, reason });
+      // //console.log("Applying for rebate:", { startDate, endDate, reason });
       const rebate = applyForRebate({ startDate, endDate, reason });
       if (rebate) {
         success("Rebate application submitted successfully");

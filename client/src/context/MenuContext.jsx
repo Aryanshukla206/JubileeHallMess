@@ -5,7 +5,7 @@ import { useAuth } from './AuthContext';
 const MenuContext = createContext();
 
 export const MenuProvider = ({ children }) => {
-  // console.log('⚙️ MenuProvider init');
+  // //console.log('⚙️ MenuProvider init');
   const { authFetch, currentUser } = useAuth();
   const [menu, setMenu] = useState(null);
   const [offDays, setOffDays] = useState([]);
@@ -26,7 +26,7 @@ export const MenuProvider = ({ children }) => {
           authFetch('/api/menu'),
           authFetch('/api/off-days'),
         ]);
-        // console.log(mRes, "mRes from menu");
+        // //console.log(mRes, "mRes from menu");
         const [mData, oData] = await Promise.all([mRes.json(), oRes.json()]);
         setMenu(mData);
         setOffDays(oData);
@@ -58,7 +58,7 @@ export const MenuProvider = ({ children }) => {
 
   // Add an off-day
   const addOffDay = async (date, reason) => {
-    // console.log(date, reason, "date and reason from addOffDay");
+    // //console.log(date, reason, "date and reason from addOffDay");
     // payload = { payload, reason };
     const res = await authFetch('/api/off-days', {
       method: 'POST',
@@ -77,20 +77,20 @@ export const MenuProvider = ({ children }) => {
 
   // Helpers
   const isOffDay = date => {
-    // console.log('isOffDay checking:', date);
+    // //console.log('isOffDay checking:', date);
     return offDays.some(d => d.date.split('T')[0] === date);
   };
 
   const getOffDayReason = date => {
     const d = offDays.find(d => d.date.split('T')[0] === date);
-    // console.log('getOffDayReason:', date, '=>', d?.reason);
+    // //console.log('getOffDayReason:', date, '=>', d?.reason);
     return d ? d.reason : null;
   };
 
   const getMenuForDate = dateString => {
     if (!menu) return null;
     const dow = getDayOfWeek(dateString);
-    // console.log('MenuContext > getMenuForDate:', dateString, '=>', dow, menu[dow]);
+    // //console.log('MenuContext > getMenuForDate:', dateString, '=>', dow, menu[dow]);
     return menu[dow] || null;
   };
   const value = {

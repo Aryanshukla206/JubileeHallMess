@@ -7,7 +7,7 @@ const Layout = ({ children, title, subtitle }) => {
   const { isOffDay, getOffDayReason } = useMenu();
 
 
-  // console.log(isOffDay);
+  // //console.log(isOffDay);
 
   // Check if today is a mess off-day
   const today = new Date().toISOString().split('T')[0];

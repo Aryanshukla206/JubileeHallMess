@@ -8,13 +8,13 @@ export const login = async (req, res, next) => {
         // const user = await User.findOne({ email });
         // When finding user, explicitly select password
         const user = await User.findOne({ email }).select('+password');
-        // console.log(user, "user from authController.js");
+        // //console.log(user, "user from authController.js");
         if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 
         // const valid = await bcrypt.compare(password, user.password);
         const valid = password === user.password;
-        // console.log(password, "user password--->", user.password, "end");
-        // console.log(valid)
+        // //console.log(password, "user password--->", user.password, "end");
+        // //console.log(valid)
         if (!valid) return res.status(401).json({ message: 'Invalid credentials' });
 
         const token = jwt.sign(

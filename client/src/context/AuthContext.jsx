@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
       setToken(newToken);
       setCurrentUser(user);
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ token: newToken, user }));
-      // console.log(user)
+      // //console.log(user)
       return user;
     } catch (error) {
       console.error('Login error:', error);

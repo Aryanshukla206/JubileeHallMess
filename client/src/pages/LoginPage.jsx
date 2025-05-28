@@ -36,7 +36,7 @@ const LoginPage = () => {
 
     try {
       const user = await login(email, password);
-      // console.log(user, "------------------------.------------------->");
+      // //console.log(user, "------------------------.------------------->");
 
       if (user?.role === 'admin') {
         navigate('/admin');
@@ -47,7 +47,7 @@ const LoginPage = () => {
         error('Invalid email or password');
       }
     } catch (err) {
-      console.log(err, "error in login");
+      //console.log(err, "error in login");
       error(err.message || 'Invalid email or password');
       warning('Please check your credentials and try again.');
     } finally {

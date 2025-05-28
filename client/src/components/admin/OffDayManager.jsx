@@ -14,7 +14,7 @@ const OffDayManager = () => {
 
   const handleAddOffDay = (e) => {
     e.preventDefault();
-    // console.log("Adding off day with date:", date, "and reason:", reason);
+    // //console.log("Adding off day with date:", date, "and reason:", reason);
     if (!date) {
       error("Please select a date");
       return;
@@ -52,7 +52,7 @@ const OffDayManager = () => {
 
   // Sort off days by date
   const sortedOffDays = [...offDays].sort((a, b) => new Date(a.date) - new Date(b.date));
-  // console.log(date, reason, "------------->> offDays");
+  // //console.log(date, reason, "------------->> offDays");
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -72,7 +72,7 @@ const OffDayManager = () => {
                 id="offDayDate"
                 value={date}
                 onChange={(e) => {
-                  // console.log('Date input changed to:', e.target.value);
+                  // //console.log('Date input changed to:', e.target.value);
                   setDate(e.target.value)
                 }
                 }
@@ -89,7 +89,7 @@ const OffDayManager = () => {
                 id="offDayReason"
                 value={reason}
                 onChange={(e) => {
-                  // console.log('Reason input changed to:', e.target.value);
+                  // //console.log('Reason input changed to:', e.target.value);
                   setReason(e.target.value)
                 }
                 }

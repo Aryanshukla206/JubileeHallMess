@@ -190,7 +190,7 @@ const seedData = async () => {
             status: 'pending'
         });
 
-        // console.log('Data seeded successfully');
+        // //console.log('Data seeded successfully');
         process.exit();
     } catch (error) {
         console.error('Seeding error:', error);

@@ -12,7 +12,7 @@ export const RebateProvider = ({ children }) => {
   // Fetch all rebates once user is authenticated
   useEffect(() => {
     if (!currentUser) return;
-    // console.log(currentUser)
+    // //console.log(currentUser)
 
     const fetchRebates = async () => {
       try {

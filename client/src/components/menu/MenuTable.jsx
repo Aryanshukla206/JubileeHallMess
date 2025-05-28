@@ -9,7 +9,7 @@ const MenuTable = () => {
   const { isAdmin } = useAuth();
   const { success } = useToast();
 
-  // console.log("-----------> ", menu);
+  // //console.log("-----------> ", menu);
 
   const [editMode, setEditMode] = useState({
     isEditing: false,
@@ -21,7 +21,7 @@ const MenuTable = () => {
 
   const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
-  // console.log("days ----------> ", days);
+  // //console.log("days ----------> ", days);
   const mealTypes = ['breakfast', 'lunch', 'dinner'];
 
   // Format day name for display
@@ -65,7 +65,7 @@ const MenuTable = () => {
   const handleSave = () => {
     // Filter out empty items
     const filteredItems = editedItems.filter(item => item.trim() !== '');
-    // console.log("Filtered items: ", filteredItems);
+    // //console.log("Filtered items: ", filteredItems);
 
     // Update menu
     // updateMenu(editMode.day, editMode.meal, filteredItems);
@@ -90,7 +90,7 @@ const MenuTable = () => {
       meal: null
     });
   };
-  // console.log("Menu items: ", menu["sunday"]["breakfast"]);
+  // //console.log("Menu items: ", menu["sunday"]["breakfast"]);
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
