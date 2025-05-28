@@ -38,20 +38,22 @@ export const AuthProvider = ({ children }) => {
 
   // Login via API, store token+user
   const login = async (email, password) => {
-    const res = await fetch('https://jubilee-hall-mess.vercel.app/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    console.log(res)
-    if (!res.ok) return null;
-
-    const { token: newToken, user } = await res.json();
-    setToken(newToken);
-    setCurrentUser(user);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ token: newToken, user }));
-    console.log(user)
-    return user;
+    try {
+      const res = await fetch('https://jubilee-hall-mess.vercel.app/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const { token: newToken, user } = await res.json();
+      setToken(newToken);
+      setCurrentUser(user);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ token: newToken, user }));
+      // console.log(user)
+      return user;
+    } catch (error) {
+      console.error('Login error:', error);
+      return null;
+    }
   };
 
   // Logout: clear storage + state

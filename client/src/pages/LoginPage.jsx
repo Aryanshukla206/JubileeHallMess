@@ -6,7 +6,7 @@ import { Coffee, User, Lock, LogIn } from 'lucide-react';
 
 const LoginPage = () => {
   const { login, currentUser } = useAuth();
-  const { error } = useToast();
+  const { error, warning } = useToast();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -35,20 +35,21 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      const user = login(email, password);
+      const user = await login(email, password);
+      // console.log(user, "------------------------.------------------->");
 
-      if (user) {
-        // Navigate to appropriate dashboard based on role
-        if (user.role === 'admin') {
-          navigate('/admin');
-        } else if (user.role === 'resident') {
-          navigate('/dashboard');
-        }
+      if (user?.role === 'admin') {
+        navigate('/admin');
       } else {
+        navigate('/dashboard');
+      }
+      if (user === undefined) {
         error('Invalid email or password');
       }
     } catch (err) {
-      error(err.message || 'Login failed');
+      console.log(err, "error in login");
+      error(err.message || 'Invalid email or password');
+      warning('Please check your credentials and try again.');
     } finally {
       setIsLoading(false);
     }
