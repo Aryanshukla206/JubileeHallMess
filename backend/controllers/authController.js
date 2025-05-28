@@ -1,5 +1,4 @@
 import User from '../models/userModel.js';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const login = async (req, res, next) => {
@@ -9,7 +8,7 @@ export const login = async (req, res, next) => {
         // const user = await User.findOne({ email });
         // When finding user, explicitly select password
         const user = await User.findOne({ email }).select('+password');
-        console.log(user, "user from authController.js");
+        // console.log(user, "user from authController.js");
         if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 
         // const valid = await bcrypt.compare(password, user.password);

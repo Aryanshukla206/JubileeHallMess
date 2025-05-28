@@ -152,7 +152,7 @@ const seedData = async () => {
         const offDays = await OffDay.insertMany([
             { date: new Date('2025-01-01'), reason: 'New Year Holiday' },
             { date: new Date('2025-01-26'), reason: 'Republic Day' },
-            { date: new Date('2025-12-22'), reason: 'Aryan Birthday' }
+            { date: new Date('2025-12-22'), reason: "Aryan's Birthday" }
         ]);
 
         // Sample Booking
@@ -190,7 +190,7 @@ const seedData = async () => {
             status: 'pending'
         });
 
-        console.log('Data seeded successfully');
+        // console.log('Data seeded successfully');
         process.exit();
     } catch (error) {
         console.error('Seeding error:', error);
