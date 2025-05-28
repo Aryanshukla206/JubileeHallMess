@@ -24,6 +24,7 @@ function App() {
             <RebateProvider>
               <Router>
                 <Routes>
+
                   <Route path="/login" element={<LoginPage />} />
                   {/* <Route path="/guest-booking" element={<GuestBookingPage />} /> */}
                   <Route
