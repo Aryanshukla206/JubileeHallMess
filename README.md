@@ -151,11 +151,8 @@ EMAIL_FROM=no-reply@mess-management.com
 ### User Dashboard
 ![User Dashboard](https://i.ibb.co/zTWCy2c8/screencapture-jubileehallmess-vercel-app-dashboard-2025-05-30-19-12-17.png)
 
-### Meal Booking Interface
-![Meal Booking](https://via.placeholder.com/600x400?text=Meal+Booking+Interface "Booking System")
-
 ### Admin Analytics
-![Admin Analytics](https://via.placeholder.com/600x400?text=Admin+Analytics "Analytics Dashboard")
+![Admin Analytics](https://i.ibb.co/hx6hXScD/screencapture-jubileehallmess-vercel-app-admin-2025-05-30-19-18-10.png)
 
 ### Menu Management
 ![Menu Management](https://via.placeholder.com/600x400?text=Menu+Management "Weekly Menu Planner")
