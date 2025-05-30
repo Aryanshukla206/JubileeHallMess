@@ -154,11 +154,8 @@ EMAIL_FROM=no-reply@mess-management.com
 ### Admin Analytics
 ![Admin Analytics](https://i.ibb.co/hx6hXScD/screencapture-jubileehallmess-vercel-app-admin-2025-05-30-19-18-10.png)
 
-### Menu Management
-![Menu Management](https://via.placeholder.com/600x400?text=Menu+Management "Weekly Menu Planner")
-
-### Mobile View
-![Mobile View](https://via.placeholder.com/300x600?text=Mobile+View "Responsive Mobile Interface")
+### Bookings
+![Menu Management](https://i.ibb.co/hx6hXScD/screencapture-jubileehallmess-vercel-app-admin-2025-05-30-19-18-10.png)
 
 ## Deployment
 
