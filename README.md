@@ -39,18 +39,18 @@ A comprehensive hostel mess management system designed for Jubilee Hall to strea
 - React 18
 - Redux for state management
 - Tailwind CSS for styling
-- Axios for API communication
+- Fetch for API communication
 - Chart.js for data visualization
 
 ### Backend
 - Node.js with Express
 - MongoDB with Mongoose
 - JWT for authentication
-- Netlify Functions for serverless API
+- Vercel Functions 
 - Bcrypt for password hashing
 
 ### DevOps
-- Netlify for frontend hosting
+- Vercel for frontend hosting
 - MongoDB Atlas for cloud database
 - GitHub Actions for CI/CD
 - Postman for API testing
@@ -154,9 +154,8 @@ EMAIL_FROM=no-reply@mess-management.com
 ### Admin Analytics
 ![Admin Analytics](https://i.ibb.co/hx6hXScD/screencapture-jubileehallmess-vercel-app-admin-2025-05-30-19-18-10.png)
 
-### Bookings
-![Menu Management](https://i.ibb.co/hx6hXScD/screencapture-jubileehallmess-vercel-app-admin-2025-05-30-19-18-10.png)
-
+### Meal Orders
+![Menu Management](https://i.ibb.co/W4C4Jy32/screencapture-jubileehallmess-vercel-app-orders-2025-05-30-19-18-31.png)
 ## Deployment
 
 ### Frontend (Netlify)
