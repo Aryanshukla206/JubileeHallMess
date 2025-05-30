@@ -211,5 +211,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Developed with ❤️ for Jubilee Hall**  
-[Contact Support](mailto:support@mess-management.com) | 
-[Report Issue](https://github.com/yourusername/mess-management-system/issues)
+[Contact Support](mailto:aryan.msc23.du@gmail.com) 
