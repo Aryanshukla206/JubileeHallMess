@@ -1,6 +1,6 @@
 # Mess Management System - Jubilee Hall
 
-![Dashboard Preview](https://via.placeholder.com/800x400?text=Dashboard+Preview "Mess Management Dashboard")
+![Dashboard Preview]([https://via.placeholder.com](https://i.ibb.co/ycS6vHZr/screencapture-jubileehallmess-vercel-app-login-2025-05-30-18-26-33.png)/800x400?text=Dashboard+Preview "Mess Management Dashboard")
 
 A comprehensive hostel mess management system designed for Jubilee Hall to streamline meal bookings, menu planning, and administrative tasks.
 
