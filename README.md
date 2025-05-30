@@ -149,7 +149,7 @@ EMAIL_FROM=no-reply@mess-management.com
 ## Screenshots
 
 ### User Dashboard
-![User Dashboard](https://via.placeholder.com/600x400?text=User+Dashboard "Resident Dashboard")
+![User Dashboard](https://i.ibb.co/zTWCy2c8/screencapture-jubileehallmess-vercel-app-dashboard-2025-05-30-19-12-17.png)
 
 ### Meal Booking Interface
 ![Meal Booking](https://via.placeholder.com/600x400?text=Meal+Booking+Interface "Booking System")
