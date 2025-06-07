@@ -7,26 +7,36 @@ const MenuContext = createContext();
 export const MenuProvider = ({ children }) => {
   // //console.log('⚙️ MenuProvider init');
   const { authFetch, currentUser } = useAuth();
-  const [menu, setMenu] = useState(null);
+  const [menu, setMenu] = useState("");
   const [offDays, setOffDays] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Utility: day-of-week string
-  const getDayOfWeek = dateString => {
+  const getDayOfWeek = (dateString) => {
+    console.log(dateString, "date from menu ")
     const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    return days[new Date(dateString).getDay()];
+    const date = new Date(dateString);
+    console.log(days[date.getDay()]);
+    return days[date.getDay()];
   };
 
   // Fetch menu + off-days from API once user is authenticated
   useEffect(() => {
-    if (!currentUser) return;
+    // if (!currentUser) return;
     const fetchAll = async () => {
       try {
         const [mRes, oRes] = await Promise.all([
-          authFetch('/api/menu'),
-          authFetch('/api/off-days'),
+          // authFetch('/api/menu'),
+          fetch('http://localhost:3000/api/menu'),
+          // fetch('https://jubilee-hall-mess.vercel.app/api/menu'),
+          // fetch('https://jubilee-hall-mess.vercel.app/api/off-days'),
+          // authFetch('/api/off-days'),
+          fetch('http://localhost:3000/api/off-days'),
         ]);
-        // //console.log(mRes, "mRes from menu");
+        // const mRes = await fetch('https://jubilee-hall-mess.vercel.app/api/menu');
+        // const oRes = await fetch('https://jubilee-hall-mess.vercel.app/api/off-days');
+        console.log(mRes, "mRes from menu");
+        console.log(oRes, "oRes from menu");
         const [mData, oData] = await Promise.all([mRes.json(), oRes.json()]);
         setMenu(mData);
         setOffDays(oData);
@@ -87,10 +97,15 @@ export const MenuProvider = ({ children }) => {
     return d ? d.reason : null;
   };
 
-  const getMenuForDate = dateString => {
+  const getMenuForDate = (dateString) => {
     if (!menu) return null;
+    console.log(dateString, "from menu getMenuForDate")
+    console.log(typeof dateString, "from menu")
     const dow = getDayOfWeek(dateString);
-    // //console.log('MenuContext > getMenuForDate:', dateString, '=>', dow, menu[dow]);
+    console.log(dow, "from ")
+    console.log(menu)
+
+    console.log('MenuContext > getMenuForDate:', dateString, '=>', dow, menu[dow]);
     return menu[dow] || null;
   };
   const value = {

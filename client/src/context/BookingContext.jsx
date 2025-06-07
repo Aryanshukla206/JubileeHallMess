@@ -139,16 +139,48 @@ export const BookingProvider = ({ children }) => {
   };
 
   // Add guest booking
-  const addGuestBooking = async ({ userName, contactNumber, mealType, date, quantities, hasDiscount = true }) => {
-    const payload = { userName, contactNumber, mealType, date, quantities, hasDiscount, status: 'pending' };
-    const res = await authFetch('/api/guest-bookings', {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    });
-    const created = await res.json();
-    setGuestBookings(prev => [...prev, created]);
-    return created;
+  const addGuestBooking = async ({ userName, contactNumber, mealType, date, quantities, discount, isGuest }) => {
+    const payload = {
+      userName,
+      contactNumber,
+      mealType,
+      date,
+      quantities,
+      discount,
+      status: 'pending',
+      isGuest: 'true'
+    };
+
+    console.log({ payload }, "from addGuestBooking");
+
+    try {
+      const res = await fetch('http://localhost:3000/api/guest-bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      console.log(res, "from addGuestBooking res------>");
+
+      // Check if response is OK
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const created = await res.json();
+
+      // Add created booking to state
+      setGuestBookings(prev => [...prev, created]);
+
+      return created;
+    } catch (error) {
+      console.error("Error adding guest booking:", error);
+      return null;  // Or you can throw error again if you want caller to handle
+    }
   };
+
 
   // Mark resident booking complete
   const markBookingComplete = async id => {
@@ -162,10 +194,24 @@ export const BookingProvider = ({ children }) => {
     );
     return updated;
   };
+  // Mark resident booking complete
+  const markGuestBookingComplete = async id => {
+    const res = await authFetch(`/api/bookings/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ status: 'completed' })
+    });
+    const updated = await res.json();
+    setBookings(prev =>
+      prev.map(b => (b._id === updated._id ? updated : b))
+    );
+    return updated;
+  };
 
   // Utility: get available menu items
-  const getAvailableItems = (mealType, date = getTodayDate()) => {
+  const getAvailableItems = (mealType, date) => {
+    console.log(date, "from booking");
     const menu = getMenuForDate(date);
+    console.log(mealType, date, menu, "From Booking Context fn getAvailable Items")
     return menu?.[mealType] || [];
   };
 

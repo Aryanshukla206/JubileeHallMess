@@ -6,6 +6,7 @@ import { useRebates } from '../../context/RebateContext';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import getTodayDate from '../../utils/getTodayDate';
+import { useMenu } from '../../context/MenuContext';
 
 const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
   // //console.log("ddddddddddddddddddd------> ", date);
@@ -22,6 +23,12 @@ const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
   const [isTimeValid, setIsTimeValid] = useState(false);
 
   const meal = getAvailableItems(mealType, date) || [];
+  const { isOffDay, getOffDayReason } = useMenu();
+
+  // Check if selected date is off-day
+  const selectedDateIsOffDay = isOffDay?.(date) || false;
+  const offDayReason = selectedDateIsOffDay ? getOffDayReason?.(date) : '';
+
   // //console.log('MealBookingCard > mealType:', mealType);
   // //console.log('MealBookingCard > date:', date);
   // //console.log('MealBookingCard > items:', meal);
@@ -40,7 +47,7 @@ const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
       setIsTimeValid(timeValid);
 
       // Enable booking if: time is valid, not on rebate, and not already booked
-      setIsBookingEnabled(timeValid && !onRebate && !bookedAlready);
+      setIsBookingEnabled(timeValid && !onRebate && !bookedAlready && !selectedDateIsOffDay);
     }
   }, [currentUser, mealType, date, hasBookedMeal, isUserOnRebate, canBookMeal]);
 
@@ -58,6 +65,10 @@ const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
     const totalItems = Object.values(quantities).reduce((sum, q) => sum + q, 0);
     if (totalItems === 0) {
       error("Please select at least one item");
+      return;
+    }
+    if (selectedDateIsOffDay) {
+      error(`Cannot book for ${date}. Mess is closed: ${offDayReason}`);
       return;
     }
 
@@ -116,6 +127,13 @@ const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
             <Check size={20} className="text-green-500 mr-2" />
             <span className="text-green-700 font-medium">Booked for today</span>
           </div>
+        ) : selectedDateIsOffDay ? (
+          <div className="flex items-center justify-center p-4 bg-red-50 rounded-md border border-red-200">
+            <Calendar size={20} className="text-red-500 mr-2" />
+            <span className="text-red-700 font-medium">
+              Mess is closed on {date}: {offDayReason}
+            </span>
+          </div>
         ) : isOnRebate ? (
           <div className="flex items-center justify-center p-4 bg-yellow-50 rounded-md border border-yellow-200">
             <Calendar size={20} className="text-yellow-500 mr-2" />
@@ -150,8 +168,7 @@ const MealBookingCard = ({ mealType, date = getTodayDate() }) => {
             >
               Book Meal
             </button>
-          </form>
-        )}
+          </form>)}
       </div>
     </div>
   );

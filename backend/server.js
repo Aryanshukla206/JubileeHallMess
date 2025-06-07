@@ -28,7 +28,7 @@ const startServer = async () => {
 
     // Allow requests from your React app's origin
     const corsOptions = {
-        origin: [process.env.CLIENT_URL, 'http://localhost:5173', "https://jubileehallmess.netlify.app", "https://jubileehallmess.vercel.app"], // React's default port
+        origin: [process.env.CLIENT_URL, 'http://localhost:5173', "https://jubileehallmess.vercel.app"], // React's default port
         credentials: true, // Enable cookies/sessions if needed
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
         allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
@@ -47,9 +47,9 @@ const startServer = async () => {
     app.use('/api/users', protect, userRouter);
 
     app.use('/api/bookings', protect, bookingRouter);
-    app.use('/api/guest-bookings', protect, guestBookingRouter);
-    app.use('/api/menu', protect, menuRouter);
-    app.use('/api/off-days', protect, offDayRouter);
+    app.use('/api/guest-bookings', guestBookingRouter);
+    app.use('/api/menu', menuRouter); //protect
+    app.use('/api/off-days', offDayRouter); //protect
     app.use('/api/rebates', protect, rebateRouter);
 
     // 6. Error handler
@@ -64,7 +64,7 @@ const startServer = async () => {
     // 7. Start server
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
-        //console.log(`🚀 Server running on port ${PORT}`);
+        console.log(`🚀 Server running on port ${PORT}`);
     });
 };
 

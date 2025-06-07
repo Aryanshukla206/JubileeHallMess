@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useBookings } from '../../context/BookingContext';
 import { useMenu } from '../../context/MenuContext'; // Import MenuContext
 import { Calendar, Users, Utensils } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const MealBookingSummary = () => {
   const { getBookingsByDate, getGuestBookingsByDate } = useBookings();
   const { getMenuForDate } = useMenu(); // Function to get menu for a specific date
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleOpen = () => setIsOpen(prev => !prev);
 
   const [bookingStats, setBookingStats] = useState({});
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -62,7 +66,8 @@ const MealBookingSummary = () => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       {/* Header */}
-      <div className="bg-blue-600 text-white p-4 flex justify-between items-center">
+
+      <div onClick={toggleOpen} className="bg-blue-600 text-white p-4 flex justify-between items-center">
         <div>
           <h2 className="text-xl font-bold">Meal Summary</h2>
           <div className="flex items-center mt-1 text-blue-100">
@@ -70,12 +75,19 @@ const MealBookingSummary = () => {
             <span>{selectedDate}</span>
           </div>
         </div>
-        <input
-          type="date"
-          value={selectedDate}
-          onChange={e => setSelectedDate(e.target.value)}
-          className="rounded text-gray-800 p-1"
-        />
+        <div className='flex justify-end gap-6 '>
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={e => setSelectedDate(e.target.value)}
+            className="rounded text-gray-800 p-1"
+          />
+          {isOpen ? (
+            <ChevronUp className="bg-blue-200 h-5 w-5 border-2 mt-2  rounded-md text-gray-800" />
+          ) : (
+            <ChevronDown className="bg-blue-200 h-5 w-5 border-2 mt-2  rounded-md text-gray-800" />
+          )}
+        </div>
       </div>
       <div className="mb-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
         <div className="flex flex-wrap gap-4">
@@ -88,9 +100,10 @@ const MealBookingSummary = () => {
 
         </div>
       </div>
-
+      {/* <CollapsibleSection> */}
       {/* Body */}
-      <div className="p-4">
+      {isOpen && (
+        // <div >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {['breakfast', 'lunch', 'dinner'].map(mealType => {
             const stats = bookingStats[mealType] || { total: 0, quantities: {} };
@@ -131,7 +144,9 @@ const MealBookingSummary = () => {
             );
           })}
         </div>
-      </div>
+
+      )}
+      {/* </CollapsibleSection> */}
     </div>
   );
 

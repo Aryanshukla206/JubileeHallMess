@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { Filter, Search } from 'lucide-react';
 import getTodayDate from '../utils/getTodayDate';
 
+
 const OrdersPage = () => {
   const { currentUser, isAdmin } = useAuth();
   const { getBookingsByDate, getGuestBookingsByDate } = useBookings();
@@ -101,11 +102,11 @@ const OrdersPage = () => {
             <OrderList orders={GuestfilteredOrders} isGuest={true} />
           </>
         )}
+
+        {/* Guest Orders List */}
         {!isAdmin && (
           <OrderList orders={myFilteredOrders} isGuest={false} />
         )}
-
-        {/* Guest Orders List */}
 
       </div>
     </Layout>

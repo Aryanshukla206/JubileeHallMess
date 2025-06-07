@@ -1,0 +1,96 @@
+{
+    "appName": "Jubilee Hall Mess",
+    "nav": {
+        "dashboard": "Dashboard",
+        "menu": "Menu",
+        "orders": "Orders",
+        "logout": "Logout"
+    },
+    "login": {
+        "welcome": "Welcome Back",
+        "subtitle": "Sign in to manage your mess meals",
+        "email": "Email Address",
+        "password": "Password",
+        "signIn": "Sign in",
+        "demoCredentials": "Demo Credentials",
+        "demoResident": "Resident",
+        "demoEmail": "Email: resident_RoomNo@jubileehall.com",
+        "demoPassword": "Password: resident@RoomNo"
+    },
+    "dashboard": {
+        "todaysMeals": "Today's Meals",
+        "meal": {
+            "breakfast": "breakfast",
+            "lunch": "lunch",
+            "dinner": "dinner",
+            "time": {
+                "breakfast": "8:00 AM - 9:30 AM",
+                "lunch": "1:00 PM - 2:30 PM",
+                "dinner": "7:00 PM - 8:30 PM"
+            },
+            "status": {
+                "booked": "Booked for today",
+                "rebate": "On rebate for this day"
+            }
+        },
+        "applyRebate": {
+            "title": "Apply for Rebate",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "reason": "Reason",
+            "button": "Apply for Rebate",
+            "note": "Note: Rebate applications need to be approved by the mess admin before taking effect. You will not be able to book meals during the rebate period."
+        },
+        "rebateHistory": {
+            "title": "Your Rebate History",
+            "entryDate": "{{startDate}} - {{endDate}}",
+            "location": "home",
+            "statusApproved": "Approved"
+        },
+        "importantInfo": {
+            "title": "Important Information",
+            "mealTimings": "Meal Timings",
+            "timings": {
+                "breakfast": "Breakfast: 8:00 AM - 9:45 AM",
+                "lunch": "Lunch: 1:00 PM - 2:00 PM",
+                "dinner": "Dinner: 8:00 PM - 9:00 PM"
+            },
+            "rebateRules": "Rebate Rules",
+            "rebateRulesText": "Rebates must be applied at least 24 hours in advance. All rebates require admin approval."
+        }
+    },
+    "weeklyMenu": {
+        "title": "Weekly Mess Menu",
+        "subtitle": "Plan your meals with our weekly menu",
+        "table": {
+            "header": {
+                "day": "DAY",
+                "breakfast": "BREAKFAST",
+                "lunch": "LUNCH",
+                "dinner": "DINNER"
+            }
+        },
+        "menuInfo": {
+            "title": "Menu Information",
+            "description": "The mess menu is prepared weekly to provide a balanced and nutritious diet. We aim to include a variety of dishes to cater to different tastes and dietary requirements.",
+            "specialRequests": "Special Requests",
+            "specialRequestsText": "If you have any dietary restrictions or special requests, please contact the mess administration at least 48 hours in advance at mess-admin@jubileehall.com.",
+            "breakfastTitle": "Breakfast",
+            "breakfastDesc": "Our breakfast menu includes a mix of South and North Indian dishes, along with continental options.",
+            "lunchTitle": "Lunch",
+            "lunchDesc": "Lunch features a complete balanced meal with rice, dal, vegetables, and sides.",
+            "dinnerTitle": "Dinner",
+            "dinnerDesc": "Dinner includes lighter options with a focus on providing essential nutrients."
+        }
+    },
+    "orders": {
+        "title": "Meal Orders",
+        "subtitle": "Orders for Thursday 29 May 2025",
+        "filter": {
+            "date": "Date",
+            "mealType": "Meal Type",
+            "search": "Search by Name",
+            "searchPlaceholder": "Search orders..."
+        }
+    }
+}

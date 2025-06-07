@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
 // In your User model (MUST include this pre-save hook)
 UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
-    // //console.log(object)
+
 
     try {
         const salt = await bcrypt.genSalt(10);

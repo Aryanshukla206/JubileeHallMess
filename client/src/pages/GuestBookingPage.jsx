@@ -62,7 +62,7 @@ const GuestBookingPage = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-start">
+                  {/* <div className="flex items-start">
                     <Clock size={20} className="text-green-500 mr-2 mt-0.5" />
                     <div>
                       <p className="font-medium text-gray-700">Early Bird Discount</p>
@@ -70,7 +70,7 @@ const GuestBookingPage = () => {
                         Get 10% off when you book at least 1 hour in advance.
                       </p>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="flex items-start">
                     <AlertTriangle size={20} className="text-yellow-500 mr-2 mt-0.5" />

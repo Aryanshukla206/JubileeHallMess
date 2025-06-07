@@ -6,6 +6,8 @@ dotenv.config();
 
 const connectDB = async () => {
     const uri = "mongodb+srv://aryanmsc23du:9UDZZrK0v6yUVKIS@cluster0.q6vnfiz.mongodb.net/Mess?retryWrites=true&w=majority&appName=Cluster0";
+    // const uri = "mongodb://localhost:27017/MessManagement"
+    // const MONGO_URI = "local"
     if (!uri) {
         console.error('Error: MONGO_URI not defined in .env');
         process.exit(1);

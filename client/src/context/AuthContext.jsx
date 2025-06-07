@@ -3,8 +3,8 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext();
 const STORAGE_KEY = 'jubilee_auth';
-const REACT_APP_API_URL = 'https://jubilee-hall-mess.vercel.app';
-
+// const REACT_APP_API_URL = 'https://jubilee-hall-mess.vercel.app';
+const REACT_APP_API_URL = "http://localhost:3000"; // Use environment variable for API URL
 // Replace with your actual API URL
 // Base URL of your API, set via .env (e.g. REACT_APP_API_URL=http://localhost:5000)
 
@@ -39,7 +39,8 @@ export const AuthProvider = ({ children }) => {
   // Login via API, store token+user
   const login = async (email, password) => {
     try {
-      const res = await fetch('https://jubilee-hall-mess.vercel.app/api/auth/login', {
+      // 'https://jubilee-hall-mess.vercel.app/api/auth/login'
+      const res = await fetch(`${API_URL}/api/auth/login `, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

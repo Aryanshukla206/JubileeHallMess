@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { BookingProvider } from './context/BookingContext';
 import { MenuProvider } from './context/MenuContext';
 import { RebateProvider } from './context/RebateContext';
@@ -13,10 +13,13 @@ import MenuPage from './pages/MenuPage';
 import AdminDashboard from './pages/AdminDashboard';
 import OrdersPage from './pages/OrdersPage';
 import NotFoundPage from './pages/NotFoundPage';
+import TodayMenuResident from './components/menu/TodayMenuResident';
+
 
 function App() {
 
   return (
+
     <ToastProvider>
       <AuthProvider>
         <MenuProvider>
@@ -24,9 +27,8 @@ function App() {
             <RebateProvider>
               <Router>
                 <Routes>
-
                   <Route path="/login" element={<LoginPage />} />
-                  {/* <Route path="/guest-booking" element={<GuestBookingPage />} /> */}
+                  <Route path="/guest-booking" element={<GuestBookingPage />} />
                   <Route
                     path="/dashboard"
                     element={

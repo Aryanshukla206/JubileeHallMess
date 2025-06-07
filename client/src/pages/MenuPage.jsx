@@ -1,15 +1,19 @@
 import React from 'react';
 import Layout from '../components/common/Layout';
 import MenuTable from '../components/menu/MenuTable';
+import { useAuth } from '../context/AuthContext';
+import TodayMenuResident from '../components/menu/TodayMenuResident';
 
 const MenuPage = () => {
+  const { isAdmin } = useAuth();
   return (
     <Layout
-      title="Weekly Mess Menu"
+      title="Mess Menu"
       subtitle="Plan your meals with our weekly menu"
     >
       <div className="space-y-6">
-        <MenuTable />
+        {isAdmin ? <MenuTable /> : <TodayMenuResident />}
+
 
         <div className="bg-white rounded-lg shadow-md p-5">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Menu Information</h2>
@@ -24,7 +28,7 @@ const MenuPage = () => {
               <h3 className="font-medium text-blue-800 mb-2">Special Requests</h3>
               <p className="text-blue-700">
                 If you have any dietary restrictions or special requests, please contact the mess administration
-                at least 48 hours in advance at <span className="font-medium">mess-admin@jubileehall.com</span>.
+                at least 48 hours in advance at <span className="font-medium" >aryan.msc23.du@gmail.com</span>.
               </p>
             </div>
 

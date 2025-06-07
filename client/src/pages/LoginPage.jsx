@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { Coffee, User, Lock, LogIn } from 'lucide-react';
+import { Coffee, User, Lock, LogIn, CloudLightning } from 'lucide-react';
+
+
+
 
 const LoginPage = () => {
   const { login, currentUser } = useAuth();
@@ -12,6 +15,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
 
   // If user is already logged in, redirect to appropriate dashboard
   useEffect(() => {
@@ -64,12 +68,12 @@ const LoginPage = () => {
               <Coffee size={24} className="text-blue-600" />
               <h1 className="ml-2 text-xl font-bold text-gray-800">Jubilee Hall Mess</h1>
             </div>
-            {/* <Link
+            <Link
               to="/guest-booking"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >
               Guest Booking
-            </Link> */}
+            </Link>
           </div>
         </div>
       </header>

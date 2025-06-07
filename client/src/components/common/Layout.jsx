@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './Navbar';
 import OffDayBanner from './OffDayBanner';
 import { useMenu } from '../../context/MenuContext';
+import LangButton from './LangButton';
 
 const Layout = ({ children, title, subtitle }) => {
   const { isOffDay, getOffDayReason } = useMenu();
@@ -23,10 +24,15 @@ const Layout = ({ children, title, subtitle }) => {
 
       {/* Page header */}
       <header className="pt-24 pb-6 bg-blue-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* <div className='flex  justify-around gap-10 mx-auto'> */}
+        <div className="max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold">{title}</h1>
           {subtitle && <p className="mt-2 text-blue-100">{subtitle}</p>}
         </div>
+        {/* <div  >
+            <LangButton />
+          </div> */}
+        {/* </div> */}
       </header>
 
       {/* Main content */}
@@ -35,7 +41,7 @@ const Layout = ({ children, title, subtitle }) => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-blue-800 text-white py-6">
+      <footer className=" bg-blue-800 text-white py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">

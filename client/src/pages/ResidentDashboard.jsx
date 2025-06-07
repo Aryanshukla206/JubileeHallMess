@@ -5,10 +5,12 @@ import RebateForm from '../components/rebate/RebateForm';
 import { useRebates } from '../context/RebateContext';
 import { useAuth } from '../context/AuthContext';
 import { Calendar, Clock, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
+import CollapsibleSection from '../components/common/CollapsibleSection';
 
 const ResidentDashboard = () => {
   const { currentUser } = useAuth();
   const { getUserRebates } = useRebates();
+
 
   // Get resident's rebates
   const rebates = currentUser ? getUserRebates(currentUser._id) : [];
@@ -51,56 +53,61 @@ const ResidentDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Meal booking section */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-4">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Today's Meals</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <MealBookingCard mealType="breakfast" />
-              <MealBookingCard mealType="lunch" />
-              <MealBookingCard mealType="dinner" />
-            </div>
+
+          <div className=" bg-white rounded-lg shadow-md p-4">
+            {/* <h2 className="text-xl font-bold text-gray-800 mb-4">Today's Meals</h2> */}
+            <CollapsibleSection title={"Today's Meals"}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <MealBookingCard mealType="breakfast" />
+                <MealBookingCard mealType="lunch" />
+                <MealBookingCard mealType="dinner" />
+              </div>
+            </CollapsibleSection>
           </div>
+
 
           {/* Rebates history section */}
           <div className="bg-white rounded-lg shadow-md p-4">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Your Rebate History</h2>
-
-            {rebates.length === 0 ? (
-              <div className="text-center py-6 text-gray-500">
-                No rebate applications found
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {rebates.map(rebate => (
-                  <div
-                    key={rebate.id}
-                    className={`p-3 rounded-md border ${rebate.status === 'approved'
-                      ? 'border-green-200 bg-green-50'
-                      : rebate.status === 'rejected'
-                        ? 'border-red-200 bg-red-50'
-                        : 'border-yellow-200 bg-yellow-50'
-                      }`}
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="flex items-center">
-                          <Calendar size={16} className="mr-1 text-gray-500" />
-                          <span className="font-medium text-gray-800">
-                            {formatDate(rebate.startDate)} - {formatDate(rebate.endDate)}
+            {/* <h2 className="text-xl font-bold text-gray-800 mb-4">Your Rebate History</h2> */}
+            <CollapsibleSection title={"Your Rebate History"}>
+              {rebates.length === 0 ? (
+                <div className="text-center py-6 text-gray-500">
+                  No rebate applications found
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {rebates.map(rebate => (
+                    <div
+                      key={rebate.id}
+                      className={`p-3 rounded-md border ${rebate.status === 'approved'
+                        ? 'border-green-200 bg-green-50'
+                        : rebate.status === 'rejected'
+                          ? 'border-red-200 bg-red-50'
+                          : 'border-yellow-200 bg-yellow-50'
+                        }`}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <div className="flex items-center">
+                            <Calendar size={16} className="mr-1 text-gray-500" />
+                            <span className="font-medium text-gray-800">
+                              {formatDate(rebate.startDate)} - {formatDate(rebate.endDate)}
+                            </span>
+                          </div>
+                          <p className="text-gray-600 mt-1">{rebate.reason}</p>
+                        </div>
+                        <div className={`flex items-center ${getStatusTextColor(rebate.status)}`}>
+                          {getStatusIcon(rebate.status)}
+                          <span className="ml-1 font-medium text-sm capitalize">
+                            {rebate.status}
                           </span>
                         </div>
-                        <p className="text-gray-600 mt-1">{rebate.reason}</p>
-                      </div>
-                      <div className={`flex items-center ${getStatusTextColor(rebate.status)}`}>
-                        {getStatusIcon(rebate.status)}
-                        <span className="ml-1 font-medium text-sm capitalize">
-                          {rebate.status}
-                        </span>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </CollapsibleSection>
           </div>
         </div>
 
